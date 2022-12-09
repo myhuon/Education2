@@ -1,0 +1,53 @@
+<!--
+ - Created by hyunsoo.song@daeunextier.com on 2022-12-08.
+ -->
+
+<aura:component description="Evaluation2" controller="Evaluation2Controller"
+                implements="flexipage:availableForRecordHome, force:hasRecordId, flexipage:availableForAllPageTypes, force:appHostable">
+
+    <aura:attribute name="recordId" type="String"
+                    description="Get recordId in Controller"/>
+    <aura:attribute name="isClickAddButton" type="boolean" default="false"
+                    description="Check if button is clicked"/>
+
+    <!-- DataTable Attributes -->
+    <aura:attribute name="listData" type="List"/>
+    <aura:attribute name="listColumn" type="List"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+
+    <aura:attribute name="rowsToAdd" type="Integer" default="10"/>
+    <aura:attribute name="dataTableSchema" type="Object"/>
+
+    <!-- Display OpportunityLineItem Init Data -->
+    <aura:handler name="init" value="{!this}" action="{!c.fnInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.fnInit}" />
+
+    <!-- Button Add Row -->
+    <div style="text-align:right; margin:5px">
+        <lightning:button label="Add Row" onclick="{! c.fnAddRow }"/>
+    </div>
+
+    <div>
+        <div class="" style="position: relative; max-height:20rem; overflow-y:scroll;">
+            <aura:if isTrue="{!v.toggleSpinner}">
+                <lightning:spinner variant="brand" size="medium"/>
+            </aura:if>
+            <lightning:datatable
+                    aura:id="targetRows"
+                    keyField="Id"
+                    data="{!v.listData}"
+                    columns="{!v.listColumn}"
+                    showRowNumberColumn="true"
+                    onrowaction="{!c.fnDetailAction}"
+                    hideCheckboxColumn="true"
+                    draftValues="{! v.draftValues }"
+                    enableInfiniteLoading="{!v.bEnableLoading}"
+                    onloadmore="{!c.fnLoadMore}"
+                    onsave="{! c.fnSave}"
+                    oncancel="{! c.fnCancel}"
+
+            />
+        </div>
+    </div>
+</aura:component>

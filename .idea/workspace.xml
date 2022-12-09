@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="" />
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/AccountDataController.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/AccountDataController.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls-meta.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1.cls" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,8 +23,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Lightning Helper" />
+        <option value="Class" />
         <option value="Apex Class" />
+        <option value="HTML File" />
+        <option value="Lightning Component" />
         <option value="Apex Metadata" />
+        <option value="Lightning Controller" />
+        <option value="Lightning Style" />
       </list>
     </option>
   </component>
@@ -50,8 +69,12 @@
                 <ConnectionWorkspaceSettings>
                   <option name="buildSuccessDatesBySourceRootRelativePath">
                     <map>
-                      <entry key="APEXCLASS:EVALUATION1" value="1670489636616" />
+                      <entry key="APEXCLASS:ACCOUNTDATACONTROLLER" value="1670570660000" />
+                      <entry key="APEXCLASS:EVALUATION1" value="1670551542000" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1670489599967" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670577061218" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670576970000" />
+                      <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                     </map>
                   </option>
                 </ConnectionWorkspaceSettings>
@@ -66,7 +89,7 @@
         </option>
         <option name="logAnalyzerSettings">
           <LogAnalyzerSettings>
-            <option name="splitterProportion" value="0.13986014" />
+            <option name="splitterProportion" value="0.35555556" />
           </LogAnalyzerSettings>
         </option>
         <option name="retrieveAndMergeDefault" value="false" />
@@ -85,13 +108,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "settings.editor.selected.configurable": "preferences.fileTypes"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\LWCLookupCustomDatatableType" />
+      <recent name="C:\Users\송현수\IntelliJ\Education2\src\Test" />
+    </key>
+  </component>
   <component name="RunManager" selected="Apex Unit Tests.Evaluation1_test">
     <configuration name="Evaluation1_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="allTests" value="false" />
@@ -160,6 +191,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670489561880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670547513715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

@@ -65,7 +65,7 @@ public with sharing class Evaluation1 {
     public String getStrFormatYyyyMmDd(Date dtValue) {
         String strReturn;
 
-        strReturn = String.valueOf(dtValue).remove('-');
+        strReturn = String.valueOf(DateTime.newInstance(dtValue.year(), dtValue.month(), dtValue.day()).format('yyyyMMdd'));
 
         return strReturn;
     }

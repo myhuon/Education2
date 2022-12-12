@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="DN_Lookup 추가">
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.design" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupResult/DN_LookupResult.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupResult/DN_LookupResult.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupResult/DN_LookupResultController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_Paging/DN_Paging.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_Paging/DN_Paging.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_Paging/DN_PagingController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_ViewColumn/DN_ViewColumn.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_ViewColumn/DN_ViewColumn.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/DN_ViewColumn/DN_ViewColumnController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1Controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1Helper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2_1Controller.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2_1Controller.cls-meta.xml" afterDir="false" />
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="DN_ 추가">
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.evt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.evt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.design" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.cmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.cmp-meta.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_LookupRemoved_evt/DN_LookupRemoved_evt.evt-meta.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.cmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.cmp-meta.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_LookupSelected_evt/DN_LookupSelected_evt.evt-meta.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp-meta.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/DN_LookupController.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/DN_LookupController.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1.cmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1.cmp-meta.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1Controller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2_1/Evaluation2_1Helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2_1Controller.cls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2_1Controller.cls-meta.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,13 +36,14 @@
       <list>
         <option value="Class" />
         <option value="HTML File" />
+        <option value="Lightning Design" />
         <option value="Lightning Style" />
+        <option value="Lightning Application Event" />
+        <option value="Lightning Component" />
+        <option value="Lightning Controller" />
         <option value="Lightning Helper" />
         <option value="Apex Class" />
-        <option value="Lightning Design" />
-        <option value="Lightning Component" />
         <option value="Apex Metadata" />
-        <option value="Lightning Controller" />
       </list>
     </option>
   </component>
@@ -86,13 +86,14 @@
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1670812525000" />
                       <entry key="APEXCLASS:EVALUATION1" value="1670551542000" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1670489599967" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670578214315" />
-                      <entry key="APEXCLASS:EVALUATION2_1CONTROLLER" value="1670810658000" />
-                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670812789000" />
-                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPRESULT" value="1670822667259" />
-                      <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670822814275" />
-                      <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822819843" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670810363161" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670837121000" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670823484719" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPREMOVED_EVT" value="1670823264013" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPRESULT" value="1670823270692" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPSELECTED_EVT" value="1670823256000" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670823277396" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822830285" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670837368584" />
                       <entry key="AURADEFINITIONBUNDLE:EVALUATION2_1" value="1670818826516" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                       <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
@@ -129,16 +130,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/송현수/IntelliJ/Vault",
-    "settings.editor.selected.configurable": "preferences.fileTypes"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/송현수/IntelliJ/Vault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\OrderItemList" />
@@ -217,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670809377284</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="DN_ 추가">
+      <created>1670822872217</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1670822872217</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,7 +242,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Evaluation1, 2" />
     <MESSAGE value="DN_Lookup 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="DN_Lookup 추가" />
+    <MESSAGE value="DN_ 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="DN_ 추가" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670547513715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />

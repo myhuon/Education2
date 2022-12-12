@@ -3,20 +3,19 @@
  *                      
  * @author            : hyunsoo.song@daeunextier.com
  * @group             :
- * @last modified on  : 2022-12-08
+ * @last modified on  : 2022-12-12
  * @last modified by  : hyunsoo.song@daeunextier.com
  * Modifications Log
  * Ver     Date             Author               Modification
- * 1.0   2022-12-08   hyunsoo.song@daeunextier.com   Initial Version
+ * 1.0   2022-12-12   hyunsoo.song@daeunextier.com   Initial Version
  */
 public with sharing class Evaluation2Controller {
-
     @AuraEnabled
     public static List<OpportunityLineItem> getInitData(String recordId) {
         //String recordId = ApexPages.currentPage().GetParameters().get('recordId');
 
         List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id
+                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id
                 FROM OpportunityLineItem
                 WHERE OpportunityId =: recordId
         ];
@@ -39,16 +38,4 @@ public with sharing class Evaluation2Controller {
             return false;
         }
     }
-
-/*    @AuraEnabled
-    public static boolean createRecord(){
-        updateRecord(List<OpportunityLineItem> draftValues){
-        System.debug('&&&&&&&&&&&&&&&&&& controller draftValues : ' + draftValues);
-        try {
-            update draftValues;
-            return true;
-        } catch(Exception e) {
-            return false;
-        }
-    }*/
 }

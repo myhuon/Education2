@@ -3,79 +3,233 @@
  *                      
  * @author            : hyunsoo.song@daeunextier.com
  * @group             :
- * @last modified on  : 2022-12-08
+ * @last modified on  : 2022-12-12
  * @last modified by  : hyunsoo.song@daeunextier.com
  * Modifications Log
  * Ver     Date             Author               Modification
- * 1.0   2022-12-08   hyunsoo.song@daeunextier.com   Initial Version
+ * 1.0   2022-12-12   hyunsoo.song@daeunextier.com   Initial Version
  */
-
 ({
-    fnInit: function (component, event, helper) {
-                component.set('v.listColumn', [
-                    {label: 'Product', fieldName: 'Product2Id', type: 'lookup', editable: false, typeAttributes: {
-                        required: true,
-                        object : 'OpportunityLineItem',
-                        fieldName : 'Product2Id',
-                        value : { fieldName : 'Product2Id' },
-                        context : { fieldName : 'Id' },
-                        fields : ['Product2.Name'],
-                        target : '_self'
-                     }},
-                    {label: 'ListPrice', fieldName: 'ListPrice', type: 'currency', typeAttributes: { currencyCode: 'KRW'}, editable: false},
-                    {label: 'UnitPrice', fieldName: 'UnitPrice', type: 'currency', typeAttributes: { currencyCode: 'KRW'}, editable: true },
-                    {label: 'Quantity', fieldName: 'Quantity', type: 'number',  editable: true, typeAttributes: { required: true } },
-                    {label: 'TotalPrice', fieldName: 'TotalPrice', type: 'currency', typeAttributes: { currencyCode: 'KRW'}, editable: false },
-                    {label: 'Description', fieldName: 'Description', type: 'text', editable: true},
-                    {label : "Action", type: 'button', typeAttributes: {
-                        label : 'Delete',
-                        name    : 'Delete',
-                        class   : 'btn_next'
+    fnInit : function(component, event, helper){
+                //Table Column 값을 Custom Label로 지정
+                component.set("v.toggleSpinner", true);
+
+                let TableDisplayList = [];
+                TableDisplayList.push('Seq');
+                TableDisplayList.push('Product');
+                TableDisplayList.push('ListPrice');
+                TableDisplayList.push('UnitPrice');
+                TableDisplayList.push('Quantity');
+                TableDisplayList.push('TotalPrice');
+                TableDisplayList.push('Description');
+                component.set("v.TableDisplayList", TableDisplayList);
+
+                helper.getInitData(component, event, helper);
+                component.set("v.isAbleClickAddProduct", true);
+                component.set("v.toggleSpinner", false);
+    },
+
+            // SpecSheetList 레코드 선택
+            fnSelectRow: function(component, event){
+                console.log('[fnSelectRow] Start =============================>');
+                var idx = event.getSource().get("v.name");
+                console.log('[fnSelectRow] idx =============================>' + idx);
+                var value = event.getSource().get("v.checked");
+                console.log('[fnSelectRow] value =============================>' + value);
+                var data = component.get("v.listData");
+                console.log('[fnSelectRow] data =============================>' + data);
+                let listSelectedData = component.get("v.listSelectedData");
+
+                //data.forEach(function(pl){ pl.checked = false; });
+                if (idx != 'selectAll') {
+                    //data.forEach(pl => pl.checked = false);
+                    data[idx].checked = value;
+                    if(value) {
+                        listSelectedData.push(data[idx]);
+                    } else {
+                        listSelectedData.splice(listSelectedData.indexOf(data[idx]), 1);
+                    }
+                    //component.set("v.dataIdx", idx);
+                    component.set("v.listSelectedData", listSelectedData);
+                    component.set("v.listData", data);
+
+                    let isUnChecked = true;
+                    for(var row of data){
+                        console.log('[fnSelectRow] row is checked?', row.checked);
+                        if(row.checked){
+                            isUnChecked = false;
                         }
                     }
-                ]);
+                    component.set("v.isAvailableDelete", !isUnChecked);
+                } else {
+                    console.log('[fnSelectRow] else');
+                    let isUnChecked = true;
+                    for(var idx = 0; idx < data.length; idx++){
+                        data[idx].checked = value;
+                        if(value){
+                            listSelectedData.push(data[idx]);
+                            isUnChecked = false;
+                        } else {
+                            listSelectedData.splice(listSelectedData.indexOf(data[idx]), 1);
+                        }
+                    }
+                    component.set("v.listSelectedData", listSelectedData);
+                    component.set("v.isAvailableDelete", !isUnChecked);
+                    component.set("v.listData", data);
+                }
+                console.log('[fnSelectRow] End =============================>');
+            },
 
-                helper.getInitData(component);
-    },
+            fnAddRow: function(component, event, helper){
+                console.log('[fnAddRow] Start =============================>');
+                component.set("v.toggleSpinner", true);
+                var validMessage = '';
+                var objOrder = component.get("v.objOrder");
+                var hasShippingFee = component.get("v.hasShippingFee");
 
-    btn_next : function(component, event, helper){
-        console.log('&&&&&&&&&&&&&&&&&&&&&&& btn_next start!');
-    },
+                if(validMessage != '') {
+                    component.set("v.toggleSpinner", false);
+                    helper.showToast('info', validMessage);
+                    return;
+                }
+                var data = component.get("v.listData");
+                let obj = {
+                        'sobjectType'            :'OrderItem',
+                        'Product2Id'             : null,
+                        'OpportunityId'          : component.get("v.recordId"),
+                        'Quantity'               : 1.0,
+                        'UnitPrice'              : 0.0,
+                        'ListPrice'              : 0.0,
+                        'checked'                : false,
+                        'TotalPrice'             : 0.0
+                };
+                data.push(obj);
+                console.log('[fnAddRow] add row info', obj);
+                component.set("v.listData", data);
+                component.set("v.toggleSpinner", false);
+                console.log('[fnAddRow] End =============================>');
+            },
 
-    fnSave: function(component, event, helper) {
-           var draftValues = event.getParam('draftValues');
-           console.log('@@@@@@@@@@@@@@@@@@ controller draftValues : ' + draftValues[0].Id);
+            fnDeleteRow: function(component, event, helper){
+                console.log('[fnDeleteRow] Start =============================>');
+                //var idx = parseInt(event.getSource().get("v.name"));
+                let listSelectedData = component.get("v.listSelectedData");
+                var data = component.get("v.listData");
+                var listDeleteTargetId = component.get("v.listDeleteTargetId");
 
-           /*boolean isAddRow = false;
-           for(OpportunityLineItem objOppItem : draftValues){
-               if(objOppItem.Id == null) {
-                   isAddRow = true;
-                   break;
-               }
-           }
 
-           if(!isAddRow){
-               helper.doSaveDraftValues(component, draftValues);
-           } else {
-               helper.addNewItems(component, draftValues);
-           }*/
+                console.log('[fnDeleteRow] listSelectedData 1111=============================> ' + JSON.stringify(listSelectedData));
+                for(var row of listSelectedData){
+                    if(row.Id) {
+                        listDeleteTargetId.push({Id : row.Id});
+                    }
+                    data.splice(data.indexOf(row), 1);
+                }
+                console.log('[fnDeleteRow] listDeleteTargetId =============================>' + JSON.stringify(listDeleteTargetId));
 
-           helper.doSaveDraftValues(component, draftValues);
+        /*        if(data[idx].Id) {
+                    listDeleteTargetId.push({Id : data[idx].Id});
+                }
+                data.splice(idx,1);*/
 
-           $A.get("e.force:refreshView").fire();
-    },
+                if(listDeleteTargetId.length > 0)
+                    helper.deleteRow(component, event, helper, listDeleteTargetId);
 
-    fnCancel : function(component, event, helper){
-           $A.get("e.force:closeQuickAction").fire();
-    },
+                component.set("v.listData", data);
+                component.set("v.listSelectedData", []);
+                console.log('[fnDeleteRow] listData =============================>' + data);
 
-    fnAddRow : function(component, event, helper){
-        var currentData = component.get('v.listData');
-        var newData = currentData.concat(
-            {
-                Product2Id: "", ListPrice: "", UnitPrice: "", Quantity: "", TotalPrice: "", Description: ""
+                helper.doChangeTotal(component, event, helper);
+                component.set("v.isAvailableDelete", false);
+                console.log('[fnDeleteRow] End =============================>');
+            },
+
+            fnChangeValue: function(component, event, helper){
+                console.log('[fnChangeValue] Start =============================>');
+                var targetValue = event.getSource().get("v.value");
+                console.log('[fnChangeValue] targetValue =========> '+targetValue);
+                if(targetValue.length > 0){
+                    var target = event.getSource().get("v.class").split('-');
+                    console.log('[fnChangeValue] target', target);
+                    var type = target[1];
+                    var idx = parseInt(target[2],10);
+
+                    helper.changeValue(component, event, helper, type, idx, targetValue);
+                } else {
+                    var target = event.getSource().get("v.class").split('-');
+                    console.log('[fnChangeValue] target is null', target);
+                    var type = target[1];
+                    var idx = parseInt(target[2],10);
+
+                    helper.changeValue(component, event, helper, type, idx, targetValue);
+                }
+                console.log('[fnChangeValue] End =============================>');
+            },
+
+            //DN_Lookup 으로 선택한 값
+            fnHandleSelected: function(component, event, helper) {
+                console.log('[fnHandleSelected] Start =============================>');
+                var uniqueLookupIdentifier = event.getParam("uniqueLookupIdentifier").split('-');
+                console.log('[fnHandleSelected] uniqueLookupIdentifier', uniqueLookupIdentifier);
+                var targetValue = event.getParam("selectedId");
+                console.log('[fnHandleSelected] selectedId', targetValue);
+                if(targetValue.length > 0){
+                    var type = uniqueLookupIdentifier[0];
+                    var idx = parseInt(uniqueLookupIdentifier[1],10);
+
+                    helper.changeValue(component, event, helper, type, idx, targetValue);
+                }
+                console.log('[fnHandleSelected] End =============================>');
+            },
+
+            fnHandelRemoved: function(component, event, helper) {
+                console.log('[fnHandelRemoved] Start =============================>');
+                var uniqueLookupIdentifier = event.getParam("uniqueLookupIdentifier").split('-');
+                var targetValue = event.getParam("selectedId");
+                var type = uniqueLookupIdentifier[0];
+                var idx = parseInt(uniqueLookupIdentifier[1],10);
+                var listData = component.get("v.listData");
+                var objData = listData[idx];
+                console.log('[fnHandelRemoved] uniqueLookupIdentifier', uniqueLookupIdentifier);
+                console.log('[fnHandelRemoved] selectedId', targetValue);
+                console.log('[fnHandelRemoved] type', type);
+                console.log('[fnHandelRemoved] idx', idx);
+                console.log('[fnHandelRemoved] objData', objData);
+                switch (type) {
+                    case 'PricebookEntry' :
+                        objData.Description__c = null;
+                        objData.Product = null;
+                        objData.UnitPrice = 0.0;
+                        objData.ListPrice = 0.0;
+                        objData.TotalPrice = 0.0;
+                        objData.Quantity = 0.0;
+                        objData.PricebookEntryId = null;
+                        break;
+                }
+                component.set("v.listData", listData);
+                console.log('[fnHandelRemoved] End =============================>');
+            },
+
+            fnSave: function(component, event, helper){
+                console.log('[fnSave] Start =============================>');
+                component.set("v.toggleSpinner", true);
+                var validMessage = '';
+                var data = component.get("v.listData");
+
+                if(validMessage != '') {
+                    component.set("v.toggleSpinner", false);
+                    helper.showToast('info', validMessage);
+                    return;
+                }
+                helper.doSave(component, event, helper, data);
+                console.log('[fnSave] End =============================>');
+            },
+
+            fnMouseOver : function(component, event, helper){
+                component.set('v.mouseOver', true);
+            },
+
+            fnMouseOut : function(component, event, helper){
+                component.set('v.mouseOver', false);
             }
-        );
-        component.set('v.listData', newData);
-    }
 });

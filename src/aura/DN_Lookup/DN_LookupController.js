@@ -10,11 +10,14 @@
  * 1.0   2022-12-12   hyunsoo.song@daeunextier.com   Initial Version
  */
 ({
-     doInit: function (component, event, helper) {
+    doInit: function (component, event, helper) {
         console.log('--------------------------------------------------     DN_Lookup.doInit - start');
 
         var objectName = component.get('v.objectName');
+
         console.log('>>>> objectName : '+objectName);
+
+
 
         component.set('v.queryErrorMessage','');
         component.set('v.queryErrorFound',false);
@@ -108,15 +111,6 @@
             case 13:
                 if(openResults && selectedObjectIndex === 0) {
                     helper.doOpenModal(component);
-                } else if(userEnteredValue == '') {
-                    var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType + " WHERE ";
-                    if(conditions != undefined && conditions != '') query = query +" "+ conditions;
-                    query += " LIMIT "+limit;
-                    console.log('query '+ query);
-                    component.set('v.query', query);
-                    helper.doOpenModal(component);
-                } else if(userEnteredValue.toUpperCase() === 'ALL') {
-                    helper.doOpenModal(component);
                 } else {
                     var objectList = component.get('v.objectList');
                     var selectedObjectIndex = component.get('v.selectedIndex');
@@ -158,24 +152,11 @@
                     component.set('v.objectList',[]);
 
                     var comparisionStringArray=[];
-                    //코드추가
-                    console.log('userEnteredValue ==========> ' + userEnteredValue);
-                    if (userEnteredValue.toUpperCase() === 'ALL') {
-                        var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType + " WHERE ";
-                    } else {
-                        for(var i = 0;i<comparisonField.length;i++) {
-                            comparisionStringArray.push(comparisonField[i]+" LIKE '%"+userEnteredValue+"%'");
-                        }
-                        var comparisionString = comparisionStringArray.join(' OR ');
-                        var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" WHERE ("+comparisionString+") AND";
-                    }
-
-                   /* for(var i = 0;i<comparisonField.length;i++) {
+                    for(var i = 0;i<comparisonField.length;i++) {
                         comparisionStringArray.push(comparisonField[i]+" LIKE '%"+userEnteredValue+"%'");
                     }
                     var comparisionString = comparisionStringArray.join(' OR ');
-                    var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" WHERE ("+comparisionString+") AND";*/
-
+                    var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" WHERE ("+comparisionString+")";
                     if(conditions != undefined && conditions != '') {
                         query = query +" "+ conditions;
                     }
@@ -279,14 +260,14 @@
 
     // 레코드 검색 결과 모달에서 검색
     fnHandleKeyup : function(component, event, helper) {
-        console.log('-------------------------------------------------------    DN_Lookup.fnHandleKeyup - start');
+//        console.log('-------------------------------------------------------    DN_Lookup.fnHandleKeyup - start');
 
         var isEnterKey = event.keyCode === 13;
 
         if(isEnterKey) {
             component.set('v.isShowSpinner', true);
 
-            var userEnteredValue = component.find("searchKey").get("v.value");
+            var userEnteredValue = component.find('searchKey').get('v.value');
             var comparisonField = component.get('v.comparisonField');
             var comparisionStringArray = [];
             for(var i = 0;i<comparisonField.length;i++) {
@@ -301,7 +282,7 @@
 
             var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" WHERE ("+comparisionString+")";
             if(conditions != undefined && conditions != '') {
-                query = query +" AND"+ conditions;
+                query = query +" "+ conditions;
             }
             // query += " LIMIT "+limit;
             console.log(query);
@@ -344,5 +325,5 @@
         }
 
         return isValid;
-    }
-});
+    },
+})

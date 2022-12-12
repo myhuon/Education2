@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/AccountDataController.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/AccountDataController.cls-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls-meta.xml" afterDir="false" />
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="Evaluation1, 2">
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/DN_LookupController.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/DN_LookupController.cls-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +22,12 @@
       <list>
         <option value="Lightning Helper" />
         <option value="Class" />
-        <option value="Apex Class" />
         <option value="HTML File" />
-        <option value="Lightning Component" />
-        <option value="Apex Metadata" />
         <option value="Lightning Controller" />
         <option value="Lightning Style" />
+        <option value="Lightning Component" />
+        <option value="Apex Class" />
+        <option value="Apex Metadata" />
       </list>
     </option>
   </component>
@@ -70,11 +67,14 @@
                   <option name="buildSuccessDatesBySourceRootRelativePath">
                     <map>
                       <entry key="APEXCLASS:ACCOUNTDATACONTROLLER" value="1670570660000" />
+                      <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1670808398000" />
                       <entry key="APEXCLASS:EVALUATION1" value="1670551542000" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1670489599967" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670577061218" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670576970000" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670578214315" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670807596304" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670809257000" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
+                      <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
                     </map>
                   </option>
                 </ConnectionWorkspaceSettings>
@@ -114,10 +114,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "C:/Users/송현수/IntelliJ/Education2/src/aura/OrderItemList",
     "settings.editor.selected.configurable": "preferences.fileTypes"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\OrderItemList" />
+      <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\DN_Lookup" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\LWCLookupCustomDatatableType" />
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\Test" />
@@ -177,6 +182,14 @@
       <option name="presentableId" value="Default" />
       <updated>1670484251682</updated>
     </task>
+    <task id="LOCAL-00001" summary="Evaluation1, 2">
+      <created>1670578232708</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1670578232708</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -189,6 +202,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Evaluation1, 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Evaluation1, 2" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670547513715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />

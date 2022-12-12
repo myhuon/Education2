@@ -3,7 +3,7 @@
  -->
 
 <aura:component description="Evaluation2" controller="Evaluation2Controller"
-                implements="flexipage:availableForRecordHome, force:hasRecordId, flexipage:availableForAllPageTypes, force:appHostable">
+                implements="force:appHostable, flexipage:availableForRecordHome, force:hasRecordId, flexipage:availableForAllPageTypes, force:appHostable">
 
     <aura:attribute name="recordId" type="String"
                     description="Get recordId in Controller"/>
@@ -19,9 +19,13 @@
     <aura:attribute name="rowsToAdd" type="Integer" default="10"/>
     <aura:attribute name="dataTableSchema" type="Object"/>
 
-    <!-- Display OpportunityLineItem Init Data -->
-    <aura:handler name="init" value="{!this}" action="{!c.fnInit}"/>
+    <!-- 화면 새로고침 -->
     <aura:handler event="force:refreshView" action="{!c.fnInit}" />
+
+    <!-- Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.fnInit}"/>
+    <aura:handler name="lookupSelected" event="c:DN_LookupSelected_evt" action="{!c.fnHandleSelected}"/>
+    <aura:handler name="selectedLookupRemoved" event="c:DN_LookupRemoved_evt" action="{!c.fnHandelRemoved}"/>
 
     <!-- Button Add Row -->
     <div style="text-align:right; margin:5px">
@@ -46,7 +50,6 @@
                     onloadmore="{!c.fnLoadMore}"
                     onsave="{! c.fnSave}"
                     oncancel="{! c.fnCancel}"
-
             />
         </div>
     </div>

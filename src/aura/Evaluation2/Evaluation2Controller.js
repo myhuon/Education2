@@ -10,12 +10,10 @@
  * 1.0   2022-12-08   hyunsoo.song@daeunextier.com   Initial Version
  */
 
-     //import getRelatedRecords from '@salesforce/apex/OpportunityRelatedListController.getRelatedRecords';
-
 ({
     fnInit: function (component, event, helper) {
                 component.set('v.listColumn', [
-                    {label: 'Product', fieldName: 'Product2Id', type: 'lookup', editable: true, typeAttributes: {
+                    {label: 'Product', fieldName: 'Product2Id', type: 'lookup', editable: false, typeAttributes: {
                         required: true,
                         object : 'OpportunityLineItem',
                         fieldName : 'Product2Id',

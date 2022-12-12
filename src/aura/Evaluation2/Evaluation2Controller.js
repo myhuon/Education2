@@ -27,15 +27,19 @@
                     {label: 'Quantity', fieldName: 'Quantity', type: 'number',  editable: true, typeAttributes: { required: true } },
                     {label: 'TotalPrice', fieldName: 'TotalPrice', type: 'currency', typeAttributes: { currencyCode: 'KRW'}, editable: false },
                     {label: 'Description', fieldName: 'Description', type: 'text', editable: true},
-                    {label : "Add Row", fieldName : 'Name', type: 'button', typeAttributes: {
-                        label : 'Detail',
-                        name    : 'detail',
+                    {label : "Action", type: 'button', typeAttributes: {
+                        label : 'Delete',
+                        name    : 'Delete',
                         class   : 'btn_next'
                         }
                     }
                 ]);
 
                 helper.getInitData(component);
+    },
+
+    btn_next : function(component, event, helper){
+        console.log('&&&&&&&&&&&&&&&&&&&&&&& btn_next start!');
     },
 
     fnSave: function(component, event, helper) {

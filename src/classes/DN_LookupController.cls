@@ -11,7 +11,7 @@ public with sharing class DN_LookupController {
     }
 
     @AuraEnabled
-    public static Map<String, Object> getLookupDatas(String query, String sObjectName, String[] fieldSet, String searchKey, String viewObjectName, Id viewObjectId) {
+    public static Map<String, Object> getLookupDatas(String query, String sObjectName, String[] fieldSet, String searchKey) {
         System.debug('query : ' + query);
         Map<String, Schema.SObjectField> mapFields = Schema.getGlobalDescribe().get(sObjectName).getDescribe().fields.getMap();
 
@@ -27,17 +27,15 @@ public with sharing class DN_LookupController {
             });
         }
 
-        List<Product2> listDatas = Database.query(query);
-        System.debug('### listDatas : ' + listDatas);
-        System.debug('### searchKey : \'' + searchKey + '\'');
-        System.debug('### viewObjectName : ' + viewObjectName);
-
         Map<String, Object> mapReturnValue = new Map<String, Object>{ 'listColumns' => listColumns };
-
         try {
+            List<Product2> listDatas = Database.query(query);
+            System.debug('### listDatas : ' + listDatas);
+            System.debug('### searchKey : \'' + searchKey + '\'');
+
             if(''.equals(searchKey) || 'ALL'.equals(searchKey.toUpperCase())) {
                 // 1. View Object 정보 조회 (Order or Opportunity)
-                Id partnerAccountId;
+                /*Id partnerAccountId;
                 String partnerCurrency;
                 String partnerDealType;
 
@@ -54,7 +52,7 @@ public with sharing class DN_LookupController {
                     partnerDealType = objOpportunity.Partner__r.DEAL_TYPE__c;
                     System.debug('### objOpportunity : ' + objOpportunity);
                 }
-                System.debug('### partnerCurrency : ' + partnerCurrency);
+                System.debug('### partnerCurrency : ' + partnerCurrency);*/
 
 
                 Set<String> setPE = new Set<String>();
@@ -62,30 +60,13 @@ public with sharing class DN_LookupController {
                 Set<String> setPBA = new Set<String>();
                 for(Product2 obj : listDatas) {
                     setPE.add(obj.Id);
-                    setPBQ.add(obj.ProductGroup__c);
-                    if(obj.ProductGroup__c != null) setPBA.add(obj.ProductGroup__c.substring(0, 5));
                 }
 
                 // 2. PricebookEntry 조회
-                List<PricebookEntry> listPE = [SELECT Id, Product2Id FROM PricebookEntry WHERE Pricebook2.IsStandard = TRUE AND CurrencyIsoCode = :partnerCurrency AND Product2Id IN :setPE];
+                List<PricebookEntry> listPE = [SELECT Id, Product2Id FROM PricebookEntry WHERE Product2Id IN :setPE];
                 Map<Id, PricebookEntry> mapPE = new Map<Id, PricebookEntry>();
                 for(PricebookEntry obj : listPE) {
                     mapPE.put(obj.Product2Id, obj);
-                }
-
-                // 3. PricebookByQuantity__c 조회
-                List<PricebookByQuantity__c> listPBQ = [SELECT Id, ProductGroup__c FROM PricebookByQuantity__c WHERE ProductGroup__c IN :setPBQ AND CurrencyIsoCode = :partnerCurrency AND DEAL_TYPE__c = :partnerDealType];
-                Map<String, PricebookByQuantity__c> mapPBQ = new Map<String, PricebookByQuantity__c>();
-                for(PricebookByQuantity__c obj : listPBQ) {
-                    mapPBQ.put(obj.ProductGroup__c, obj);
-                }
-
-                // 4. PricebookByAccount__c 조회
-                setPBA.add('*');
-                List<PricebookByAccount__c> listPBA = [SELECT Id, ProductGroup__c FROM PricebookByAccount__c WHERE Account__c = :partnerAccountId AND ProductGroup__c IN :setPBA];
-                Map<String, PricebookByAccount__c> mapPBA = new Map<String, PricebookByAccount__c>();
-                for(PricebookByAccount__c obj : listPBA) {
-                    mapPBA.put(obj.ProductGroup__c, obj);
                 }
 
                 // 5. Valid Check
@@ -96,27 +77,18 @@ public with sharing class DN_LookupController {
                         continue;
                     }
 
-                    // 5-2. PricebookByQuantity__c
-                    else if(mapPBQ.get(obj.ProductGroup__c) == null) {
-                        continue;
-                    }
-
-                    // 5-3. PricebookByAccount__c
-                    else if(mapPBA.get('*') == null && mapPBA.get(obj.ProductGroup__c) == null) {
-                        continue;
-                    }
-
                     System.debug('#### : ' + obj);
                     listPassedProduct.add(obj);
                 }
                 mapReturnValue.put('listDatas', listPassedProduct);
             }
+            if(mapReturnValue.get('listDatas') == null) { mapReturnValue.put('listDatas', listDatas); }
+            if(mapReturnValue.get('listDatas') == null) { mapReturnValue.put('listDatas', listDatas); }
+            System.debug('mapReturnValue : ' + mapReturnValue);
         } catch(Exception e) {
             System.debug('#### ' + e.getMessage() + ' Line : ' + e.getLineNumber());
         }
 
-        if(mapReturnValue.get('listDatas') == null) { mapReturnValue.put('listDatas', listDatas); }
-        System.debug('mapReturnValue : ' + mapReturnValue);
 
         return mapReturnValue;
     }

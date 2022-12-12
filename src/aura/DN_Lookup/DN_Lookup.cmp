@@ -2,7 +2,7 @@
  - Created by hyunsoo.song@daeunextier.com on 2022-12-12.
  -->
 
-<aura:component description="DN_Lookup" controller="DN_LookupController">
+<aura:component description="DN_Lookup" controller="DN_LookupController" access="global">
     <!-- * Parameter Attribute -->
     <aura:attribute name="uniqueLookupIdentifier" type="String" required="true" default="" description="고유 아이디, 드롭 다운에서 값을 선택할 때마다 이벤트 매개 변수로 전송"/>
     <!-- Query -->
@@ -37,7 +37,7 @@
     <aura:attribute name="enteredValue" type="String"/>
     <aura:attribute name="selectedIndex" type="Integer"/>
     <aura:attribute name="lookupInputFocused" type="Boolean" default="false"/>
-    <aura:attribute name="placeholder" type="String" default="{!$Label.c.SearchAllProduct}" description="placeholder"/>
+    <!--<aura:attribute name="placeholder" type="String" default="{!$Label.c.SearchAllProduct}" description="placeholder"/>-->
     <aura:attribute name="query" type="String" description="" />
     <aura:attribute name="queryErrorMessage" type="String" description=""/>
     <aura:attribute name="queryErrorFound" type="Boolean" description=""/>
@@ -150,9 +150,9 @@
                                                     <span class="slds-assistive-text">Description of icon</span>
                                                 </span>
                                             </span>
-                                            <span class="slds-media__body">
+                                            <!--<span class="slds-media__body">
                                                 <c:DN_LookupResult object="{!obj}" fieldName="{!v.primaryDisplayField}" alternateFieldList="{!v.alternateDisplayField}"/>
-                                            </span>
+                                            </span>-->
                                         </span>
                                     </li>
                                 </aura:iteration>
@@ -263,7 +263,7 @@
                     <header class="slds-modal__header">
                         <lightning:buttonIcon iconName="utility:close" size="small" alternativeText="Close" variant="bare-inverse" class="slds-modal__close"
                                               onclick="{!c.fnSearchClose}" />
-                        <h2 id="modal-heading-id" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.SearchResult}</h2>
+                        <!--<h2 id="modal-heading-id" class="slds-text-heading_medium slds-hyphenate">{!$Label.c.SearchResult}</h2>-->
                     </header>
 
                     <!-- Content -->
@@ -306,8 +306,9 @@
                                             <aura:iteration items="{!v.pagingDatas}" var="obj" indexVar="dataIdx">
                                                 <tr onclick="{!c.fnResultSelected}" style="cursor: pointer;" data-current-index="{!dataIdx}">
                                                     <aura:iteration items="{!v.tableColumns}" var="header" indexVar="headerIdx">
-                                                        <c:DN_ViewColumn    aura:id="col" uniqueIdentifier="{!dataIdx + '-' + headerIdx}"
-                                                                            header="{!header}" data="{!obj}" />
+                                                        <!--<c:DN_ViewColumn    aura:id="col" uniqueIdentifier="{!dataIdx + '-' + headerIdx}"
+                                                                            header="{!header}" data="{!obj}" />-->
+                                                        <td>{!obj}</td>
                                                     </aura:iteration>
                                                 </tr>
                                             </aura:iteration>
@@ -315,9 +316,9 @@
                                         </table>
                                     </ui:scrollerWrapper>
 
-                                    <div class="slds-col slds-align_absolute-center slds-p-top_medium">
+                                   <!-- <div class="slds-col slds-align_absolute-center slds-p-top_medium">
                                         <c:DN_Paging currentPageNumber="{!v.pageNumber}" maxPageNumber="{!v.maxPage}" />
-                                    </div>
+                                    </div>-->
                                 </aura:set>
                             </aura:if>
                         </div>
@@ -325,7 +326,7 @@
 
                     <!-- Footer -->
                     <footer class="slds-modal__footer">
-                        <lightning:button variant="neutral" label="{!$Label.c.Cancel}" onclick="{!c.fnSearchClose}" />
+                        <lightning:button variant="neutral" label="취소" onclick="{!c.fnSearchClose}" />
                     </footer>
                 </div>
             </section>

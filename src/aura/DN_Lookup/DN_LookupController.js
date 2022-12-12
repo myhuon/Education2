@@ -18,7 +18,6 @@
         console.log('>>>> objectName : '+objectName);
 
 
-
         component.set('v.queryErrorMessage','');
         component.set('v.queryErrorFound',false);
         component.set('v.lookupInputFocused',false);

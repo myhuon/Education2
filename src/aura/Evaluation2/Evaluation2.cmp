@@ -149,16 +149,16 @@
                                         <col width="15%"/>       <!--TotalPrice-->
                                         <col width="25%"/>       <!--Description%-->
                                     </colgroup>
-                                    <aura:set attribute="else">
+                                   <!-- <aura:set attribute="else">
                                         <colgroup>
                                             <col width=""/>
-                                            <col width="20%"/>      <!--품목명-->
-                                            <col width="35%"/>      <!--규격-->
-                                            <col width="10%"/>      <!--재고이동수-->
-                                            <col width="15%"/>      <!--단가-->
-                                            <col width="20%"/>      <!--비고-->
+                                            <col width="20%"/>      &lt;!&ndash;품목명&ndash;&gt;
+                                            <col width="35%"/>      &lt;!&ndash;규격&ndash;&gt;
+                                            <col width="10%"/>      &lt;!&ndash;재고이동수&ndash;&gt;
+                                            <col width="15%"/>      &lt;!&ndash;단가&ndash;&gt;
+                                            <col width="20%"/>      &lt;!&ndash;비고&ndash;&gt;
                                         </colgroup>
-                                    </aura:set>
+                                    </aura:set>-->
                                 </aura:if>
                                 <thead>
                                 <tr class="slds-line-height_reset">
@@ -201,8 +201,8 @@
                                             <td class="slds-cell-wrap" title="{!obj.Name}">
                                                 <c:DN_Lookup aura:id="Lightning1"
                                                              uniqueLookupIdentifier="{!'PricebookEntry-' + idx}"
-                                                             objectName="Product2"
-                                                             fieldSet="['Name','ListPrice','UnitPrice', 'Quantity', 'TotalPrice', 'Description']"
+                                                             objectName="OpportunityLineItem"
+                                                             fieldSet="['Name', 'ListPrice','UnitPrice', 'Quantity', 'TotalPrice', 'Description', 'Id']"
                                                              limit="10000"
                                                              comparisonField="['Name','Product2Id']"
                                                              primaryDisplayField="Name"
@@ -214,45 +214,34 @@
                                                              readOnly="{!if(obj.Id != null, true, false)}"
                                                 />
                                             </td>
-                                            <aura:if isTrue="{!if(v.objRecordType == 'LRPOrder', true, false)}">
-                                                <td class="custom-fixed-width-160px slds-cell-wrap" title="Description">
-                                                    <!--<lightning:inputField fieldName="Description" value="{!obj.Description}" variant="label-hidden"/>-->
-                                                    {!obj.Specification}
-                                                </td>
-                                            </aura:if>
-                                            <td class="" title="{!if(v.objRecordType == 'LRPOrder', '재고이동수', '수량')}">
+                                            <td class="td-listPrice" title="=ListPrice">
+                                                <!--<lightning:inputField fieldName="ListPrice__c" value="{!obj.ListPrice__c}" variant="label-hidden" disabled="true"/> -->
+                                                <!--<lightning:formattedNumber value="{!obj.ListPrice}" style="currency" currencyCode="{!v.objOrder.CurrencyIsoCode}"/>-->
+                                                <lightning:input formatter="currency" type="number"
+                                                                 value="{!obj.ListPrice}" variant="label-hidden"
+                                                                 disabled="true"/>
+                                            </td>
+                                            <td class="nolabel" title="UnitPrice">
+                                                <lightning:input formatter="currency" type="number"
+                                                                 value="{!obj.UnitPrice}" variant="label-hidden"
+                                                                 class="{!'ItemList-Price-' + idx}"
+                                                                 onchange="{!c.fnChangeValue}" />
+                                            </td>
+                                            <td class="">
                                                 <lightning:input type="number" step=".01" value="{!obj.Quantity}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Amount-' + idx}"
-                                                                 onchange="{!c.fnChangeValue}"
-                                                                 disabled="{!if(obj.IsShippingFee == true, true, if(obj.Product2Id == null, true, if(v.isAbleEditQuantity == false, true, false)))}"/>
+                                                                 onchange="{!c.fnChangeValue}" />
                                             </td>
-                                            <td class="nolabel" title="UnitPrice">
-                                                <lightning:input formatter="number" type="number" step=".01"
-                                                                 value="{!obj.UnitPrice}" variant="label-hidden"
-                                                                 class="{!'ItemList-Price-' + idx}"
-                                                                 onchange="{!c.fnChangeValue}"
-                                                                 disabled="{!if(obj.Product2Id == null, true, if(v.isAbleEditUnitPrice == false, true, false))}"/>
+                                            <td class="" title="TotalAmount">
+                                                <!--<lightning:inputField fieldName="TotalPrice__c" value="{!obj.TotalPrice__c}" variant="label-hidden" disabled="true"/>-->
+                                                <lightning:input formatter="currency" type="number"
+                                                                 value="{!obj.TotalPrice}" variant="label-hidden"
+                                                                 disabled="true"/>
                                             </td>
-                                            <aura:if isTrue="{!if(v.objRecordType == 'LRPOrder', false, true)}">
-                                                <td class="" title="=ListPrice">
-                                                    <!--<lightning:inputField fieldName="ListPrice__c" value="{!obj.ListPrice__c}" variant="label-hidden" disabled="true"/> -->
-                                                    <!--<lightning:formattedNumber value="{!obj.ListPrice__c}" style="currency" currencyCode="{!v.objOrder.CurrencyIsoCode}"/>-->
-                                                    <lightning:input type="number" step=".01"
-                                                                     value="{!obj.ListPrice__c}" variant="label-hidden"
-                                                                     disabled="true"/>
-                                                </td>
-                                                <td class="" title="TotalAmount">
-                                                    <!--<lightning:inputField fieldName="TotalPrice__c" value="{!obj.TotalPrice__c}" variant="label-hidden" disabled="true"/>-->
-                                                    <lightning:input type="number" step=".01"
-                                                                     value="{!obj.TotalPrice__c}" variant="label-hidden"
-                                                                     disabled="true"/>
-                                                </td>
-                                            </aura:if>
                                             <td>
                                                 <lightning:input type="text" value="{!obj.Description}"
-                                                                 variant="label-hidden"
-                                                                 disabled="{!if(obj.Product2Id == null, true, if(v.isAbleEditRemark == false, true, false))}"/>
+                                                                 variant="label-hidden" />
                                             </td>
                                         </tr>
                                     </aura:iteration>

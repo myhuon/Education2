@@ -325,14 +325,11 @@
                 let TotalPriceAmountTotal = 0.0;        //할인총계 계산을 위한 (수주단가 * 수량) 총계
 
                 for (var i = 0; i < ListData.length; i++){
-                    TotalPriceAllProduct +=  parseFloat(ListData[i].TotalPrice__c);
+                    TotalPriceAllProduct +=  parseFloat(ListData[i].TotalPrice);
                     if (!this.isNullCheck(ListData[i].Product2Id)) {
-                        if (ListData[i].IsShippingFee == false) {
-                            TotalQuantityAllProduct +=  parseFloat(ListData[i].Quantity);
-                            DiscountAmountAllProduct +=  parseFloat(ListData[i].DiscountAmount__c);
-                            TotalPriceAmountTotal +=  parseFloat(ListData[i].TotalPrice__c);
-                            ListPriceAmountTotal +=  parseFloat(ListData[i].ListPrice__c * ListData[i].Quantity);
-                        }
+                        TotalQuantityAllProduct +=  parseFloat(ListData[i].Quantity);
+                        TotalPriceAmountTotal +=  parseFloat(ListData[i].TotalPrice);
+                        ListPriceAmountTotal +=  parseFloat(ListData[i].ListPrice * ListData[i].Quantity);
                     }
                 }
 

@@ -83,7 +83,6 @@ public with sharing class DN_LookupController {
                 mapReturnValue.put('listDatas', listPassedProduct);
             }
             if(mapReturnValue.get('listDatas') == null) { mapReturnValue.put('listDatas', listDatas); }
-            if(mapReturnValue.get('listDatas') == null) { mapReturnValue.put('listDatas', listDatas); }
             System.debug('mapReturnValue : ' + mapReturnValue);
         } catch(Exception e) {
             System.debug('#### ' + e.getMessage() + ' Line : ' + e.getLineNumber());

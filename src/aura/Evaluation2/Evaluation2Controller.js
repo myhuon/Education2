@@ -15,7 +15,7 @@
                 component.set("v.toggleSpinner", true);
 
                 let TableDisplayList = [];
-                TableDisplayList.push('Seq');
+                /*TableDisplayList.push('Seq');*/
                 TableDisplayList.push('Product');
                 TableDisplayList.push('ListPrice');
                 TableDisplayList.push('UnitPrice');
@@ -94,12 +94,12 @@
                 }
                 var data = component.get("v.listData");
                 let obj = {
-                        'sobjectType'            :'OrderItem',
+                        'sobjectType'            :'OpportunityLineItem',
                         'Product2Id'             : null,
                         'OpportunityId'          : component.get("v.recordId"),
-                        'Quantity'               : 1.0,
-                        'UnitPrice'              : 0.0,
                         'ListPrice'              : 0.0,
+                        'UnitPrice'              : 0.0,
+                        'Quantity'               : 0.0,
                         'checked'                : false,
                         'TotalPrice'             : 0.0
                 };

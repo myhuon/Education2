@@ -17,9 +17,9 @@ public with sharing class Evaluation1_test {
 
         Test.startTest();
 
-        evaluation1.getResult3And5(20);
-        evaluation1.getStrPatternIntegerToString(123, 5);
-        evaluation1.getStrFormatYyyyMmDd(Date.today());
+        System.debug('[getResult3And5] result : '+ evaluation1.getResult3And5(20));
+        System.debug('[getStrPatternIntegerToString] result : '+evaluation1.getStrPatternIntegerToString(123, 5));
+        System.debug('[getStrFormatYyyyMmDd] result : '+evaluation1.getStrFormatYyyyMmDd(Date.today()));
 
         Test.stopTest();
     }

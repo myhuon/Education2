@@ -44,14 +44,12 @@
                         console.log('[getInitData] result', listData);
                         if (listData.length != 0) {
                             component.set("v.listData", listData);
+                            component.set("v.listDeleteTargetId", []);
+                            component.set("v.listSelectedData", []);
+                            component.find("selectAll").set("v.checked", false);
+                            this.doChangeTotal(component, event, helper);
+                            his.doSetDisability(component, event, helper);
                         }
-
-                        component.set("v.listDeleteTargetId", []);
-                        component.set("v.listSelectedData", []);
-                        component.find("selectAll").set("v.checked", false);
-                        this.doChangeTotal(component, event, helper);
-                        his.doSetDisability(component, event, helper);
-
                     } else if (state === "ERROR") {
                         var errors = response.getError();
                         if (errors) {

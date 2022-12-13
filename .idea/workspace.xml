@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="DN_ 수정">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="수정 - Description&#10;저장 미완료">
+      <change afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/triggers/Opportunity.trigger" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/triggers/Opportunity.trigger-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IlluminatedCloud/Education2/OfflineSymbolTable.zip" beforeDir="false" afterPath="$PROJECT_DIR$/IlluminatedCloud/Education2/OfflineSymbolTable.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1_test.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1_test.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +28,10 @@
         <option value="Lightning Component" />
         <option value="Lightning Controller" />
         <option value="Lightning Helper" />
+        <option value="Lightning Style" />
+        <option value="Apex Trigger" />
         <option value="Apex Class" />
         <option value="Apex Metadata" />
-        <option value="Lightning Style" />
       </list>
     </option>
   </component>
@@ -67,15 +73,18 @@
                       <entry key="APEXCLASS:ACCOUNTDATACONTROLLER" value="1670570660000" />
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1670838723635" />
                       <entry key="APEXCLASS:EVALUATION1" value="1670551542000" />
-                      <entry key="APEXCLASS:EVALUATION1_TEST" value="1670489599967" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670899254183" />
+                      <entry key="APEXCLASS:EVALUATION1_TEST" value="1670913609788" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670915475000" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1670923679579" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1670904219000" />
+                      <entry key="APEXTRIGGER:OPPORTUNITY" value="1670915594604" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670840907093" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPREMOVED_EVT" value="1670823264013" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPRESULT" value="1670823270692" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPSELECTED_EVT" value="1670823256000" />
                       <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670823277396" />
                       <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822830285" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670899421660" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1670915476000" />
                       <entry key="AURADEFINITIONBUNDLE:EVALUATION2_1" value="1670818826516" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                       <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
@@ -221,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670841413513</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="수정 - Description&#10;저장 미완료">
+      <created>1670899751311</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670899751311</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -240,9 +256,10 @@
     <MESSAGE value="DN_Lookup 추가" />
     <MESSAGE value="DN_ 추가" />
     <MESSAGE value="DN_ 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="DN_ 수정" />
+    <MESSAGE value="수정 - Description&#10;저장 미완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="수정 - Description&#10;저장 미완료" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670547513715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670913617557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

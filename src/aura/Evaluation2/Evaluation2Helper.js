@@ -68,17 +68,18 @@
             doSave: function (component, event, helper, draftValues) {
                 console.log('[doSave] Start ==============================>');
                 component.set("v.toggleSpinner", true);
-                var objOrder = component.get("v.objOrder");
+                //var objOrder = component.get("v.objOrder");
                 var action = component.get("c.saveRecord");
 
                 action.setParams({
-                    recordId: component.get("v.recordId"),
-                    strListObj: JSON.stringify(draftValues)
+                    draftValues : draftValues
                 });
 
                 action.setCallback(this, function (response) {
                     var state = response.getState();
                     if (state === "SUCCESS") {
+                        component.set("v.listUpdate", []);
+                        this.doChangeTotal(component, event, helper);
                         helper.showToast("success", "Save Success!");
                         console.log('[doSave] SUCCESS!!! ==============================>');
                         $A.get('e.force:refreshView').fire();
@@ -132,75 +133,36 @@
             changeValue: function (component, event, helper, type, idx, targetValue) {
                 console.log('[changeValue] Start ==============================>');
                 component.set("v.toggleSpinner", true);
-                console.log('[changeValue] type', type);
-                console.log('[changeValue] idx', idx);
-                console.log('[changeValue] targetValue', targetValue);
+                console.log('[changeValue] type : ', type);
+                console.log('[changeValue] idx : ', idx);
+                console.log('[changeValue] targetValue : ', targetValue);
                 let ListData = component.get("v.listData");
                 let objData = ListData[idx];
-                var objOrder = component.get("v.objOrder");
+                var listUpdate = component.get("v.listUpdate");
+                /*var objOrder = component.get("v.objOrder");
+                console.log('[changeValue] objOrder : ', objOrder);*/
                 console.log('[changeValue] before changed', objData);
-                let qty = ((objData.Quantity !== undefined || objData.Quantity !== null) && objData.Quantity instanceof String) ? parseFloat(objData.Quantity) : objData.Quantity;
-                let objPricebook = component.get("v.listPricebookEntry")
-                switch (type) {
-                    case 'PricebookEntry':
-                        component.set("v.listData", ListData);
-                        component.set("v.toggleSpinner", false);
+                //let qty = ((objData.Quantity !== undefined || objData.Quantity !== null) && objData.Quantity instanceof String) ? parseFloat(objData.Quantity) : objData.Quantity;
+                //let objPricebook = component.get("v.listPricebookEntry")
+                //switch (type) {
+                    //case 'Amount':
+                    var targetField = '';
+                    switch (type) {
+                        case 'Amount':
+                            targetField = 'qty';
+                            break;
+                        case 'Price':
+                            targetField = 'unitprice';
+                            break;
+                        case 'Description':
+                            targetField = 'description';
+                            break;
+                    }
 
-                        var action = component.get("c.getResource");
-                        action.setParams({
-                            productId: targetValue,
-                            recordId: component.get("v.recordId")
-                        });
-                        action.setCallback(this, function (response) {
-                            var state = response.getState();
-                            if (state === "SUCCESS") {
-                                var result = response.getReturnValue();
-                                console.log('[changeValue] result', result);
-                                var strStatus = result['strStatus'];
-                                var strMessage = result['strMessage'];
-                                if (strStatus === 'SUCCESS') {
-                                    if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
-                                        objData.ListPrice__c = result['objPricebookByItem'].ListPrice;
-                                        objData.UnitPrice = result['objPricebookByItem'].ListPrice;
-                                    }
-                                    if(!$A.util.isEmpty(result['objProduct'].Spec__c)) {
-                                        objData.Product2Id = targetValue;
-                                        objData.Specification = result['objProduct'].Spec__c;
-                                        objData.fm_Weight__c = result['objProduct'].NetWeight__c;
-                                    }
-                                    if(!$A.util.isEmpty(result['mapPricebookEntry'])) {
-                                        objData.PricebookEntryId = result['mapPricebookEntry'];
-                                    }
-
-                                    objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                                    objData.DiscountAmount__c = 0.0;
-                                    objData.Quantity = 1.0;
-
-                                    console.log('[changeValue] result of changed', JSON.stringify(objData));
-                                    component.set("v.listData", ListData);
-                                    this.doChangeTotal(component, event, helper);
-                                } else {
-                                    this.showToast("error", strMessage);
-                                }
-                            } else if (state === "ERROR") {
-                                var errors = response.getError();
-                                if (errors) {
-                                    if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
-                                } else {
-                                    this.showToast("error", "Unknown error");
-                                }
-                            }
-                            component.set("v.showSpinner", false);
-                        });
-                        $A.enqueueAction(action);
-                    break;
-
-                    // 22.09.02 - 슈프리마회의: 단가는 기준선이 없고 Dynamic하게 변경되야 함 (IT팀 정승호 수석 확인, PartnerCommunity  화면 느려짐 현상도 확인 완료)
-                    case 'Amount':
                         console.log('[changeValue] Amount');
                         if(!$A.util.isEmpty(targetValue)){
-                           objData.Quantity = parseFloat(targetValue);
-                            if (objOrder.fm_DEAL_TYPE__c != undefined) {
+                           //objData.Quantity = parseFloat(targetValue);
+                           // if (objOrder.fm_DEAL_TYPE__c != undefined) {
                                 component.set("v.listData", ListData);
                                 component.set("v.toggleSpinner", true);
 
@@ -208,14 +170,23 @@
                                 action.setParams({
                                     productId: ListData[idx].Product2Id,
                                     recordId: component.get("v.recordId"),
-                                    qty : targetValue
+                                    itemId : objData.Id,
+                                    targetField : targetField,
+                                    targetValue : targetValue
                                 });
                                 action.setCallback(this, function (response) {
                                     var state = response.getState();
                                     if (state === "SUCCESS") {
                                         var result = response.getReturnValue();
                                         console.log('[changeValue] result', result);
-                                        if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
+                                        if(result != null){
+                                            console.log('[doSave] listUpdate1 : ', listUpdate);
+                                            listUpdate.push(result);
+                                            console.log('[doSave] listUpdate2 : ', listUpdate);
+                                            component.set("v.listUpdate", listUpdate);
+                                            console.log('[doSave] listUpdate3 : ', listUpdate);
+                                        }
+                                        /*if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
                                             objData.ListPrice__c = result['objPricebookByItem'].ListPrice;
                                             if(objData.DC__c != 0 && !$A.util.isEmpty(objData.UnitPrice)) {
                                                 if (objData.AdditionalDiscount__c != 0) {
@@ -233,7 +204,7 @@
                                                 objData.DC__c = 0.0;
                                                 objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
                                             }
-                                        }
+                                        }*/
                                         /*if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
                                             objData.ListPrice__c = result['objPricebookByItem'].ListPrice;
                                             objData.UnitPrice = result['objPricebookByItem'].ListPrice;
@@ -243,8 +214,8 @@
                                         objData.AdditionalDiscount__c = 0.0;
                                         objData.DC__c = 0.0;*/
                                         console.log('[changeValue] result of changed', JSON.stringify(objData));
-                                        component.set("v.listData", ListData);
-                                        this.doChangeTotal(component, event, helper);
+                                        //component.set("v.listData", ListData);
+
                                     } else if (state === "ERROR") {
                                           var errors = response.getError();
                                           if (errors) {
@@ -256,58 +227,10 @@
                                       component.set("v.toggleSpinner", false);
                                   });
                                   $A.enqueueAction(action);
-                            }
+                          //  }
                         }
-                    break;
-                    case 'Price':
-                        console.log('[changeValue] Price');
-                        if(!$A.util.isEmpty(targetValue)){
-                            if (objData.Quantity != undefined) {
-                                if (objData.IsShippingFee == false) {
-                                    objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                                    objData.DC__c = (100 - ((targetValue / objData.ListPrice__c) * 100));
-                                    objData.DiscountAmount__c =  objData.ListPrice__c * (objData.DC__c * 0.01) * objData.Quantity;
-                                    objData.AdditionalDiscount__c = 0.0;
-                                } else {
-                                    objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                                    objData.ListPrice__c = objData.UnitPrice;
-                                    objData.DC__c = 0.0;
-                                    objData.DiscountAmount__c =  0.0;
-                                    objData.AdditionalDiscount__c = 0.0;
-                                }
-                            }
-                        }
-                    component.set("v.listData", ListData);
-                    this.doChangeTotal(component, event, helper);
-                    break;
-                    case 'Discount':
-                        console.log('[changeValue] Discount');
-                        if(!$A.util.isEmpty(targetValue)){
-                            if (objData.Quantity != undefined) {
-                                objData.DC__c = targetValue;
-                                objData.UnitPrice =  Math.round(objData.ListPrice__c * ((100 - targetValue) * 0.01));
-                                objData.DiscountAmount__c =  objData.ListPrice__c * (objData.DC__c * 0.01) * objData.Quantity;
-                                objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                            }
-                        } else {
-                            console.log('[changeValue] Discount is null');
-                            if (objData.Quantity != undefined) {
-                                objData.AdditionalDiscount__c = 0.0;
-                                objData.DC__c = 0.0;
-                                objData.UnitPrice =  objData.ListPrice__c;
-                                objData.DiscountAmount__c =  0.0;
-                                objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                            } else {
-                                objData.AdditionalDiscount__c = 0.0;
-                                objData.DC__c = 0.0;
-                                objData.DiscountAmount__c =  0.0;
-                                objData.TotalPrice__c = 0.0;
-                            }
-                        }
-                        component.set("v.listData", ListData);
-                        this.doChangeTotal(component, event, helper);
-                        break;
-                }
+                   // break;
+                //}
                 component.set("v.toggleSpinner", false);
                 console.log('[changeValue] End ==============================>');
             },

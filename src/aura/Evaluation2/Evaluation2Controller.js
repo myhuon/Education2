@@ -150,6 +150,7 @@
                 console.log('[fnChangeValue] targetValue =========> '+targetValue);
                 if(targetValue.length > 0){
                     var target = event.getSource().get("v.class").split('-');
+                    console.log('[fnChangeValue] v.class', event.getSource().get("v.class"));
                     console.log('[fnChangeValue] target', target);
                     var type = target[1];
                     var idx = parseInt(target[2],10);
@@ -214,7 +215,9 @@
                 console.log('[fnSave] Start =============================>');
                 component.set("v.toggleSpinner", true);
                 var validMessage = '';
-                var data = component.get("v.listData");
+                //var data = component.get("v.listData");
+                var data = component.get("v.listUpdate");
+                console.log('[fnSave] v.listUpdate : ', data);
 
                 if(validMessage != '') {
                     component.set("v.toggleSpinner", false);

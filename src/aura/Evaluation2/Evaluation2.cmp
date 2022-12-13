@@ -51,6 +51,7 @@
     <aura:attribute name="TotalPriceAllProduct" type="Integer"/>
     <aura:attribute name="DiscountAmountAllProduct" type="Integer"/>
     <aura:attribute name="DiscountedRateAllProduct" type="Integer"/>
+    <aura:attribute name="listUpdate" type="List" default="[]"/>
 
     <!-- 수정/삭제 불가 Flag값-->
     <aura:attribute name="isAvailableDelete" type="Boolean" default="false"/>
@@ -228,7 +229,7 @@
                                                                  onchange="{!c.fnChangeValue}" />
                                             </td>
                                             <td class="">
-                                                <lightning:input type="number" step=".01" value="{!obj.Quantity}"
+                                                <lightning:input type="number" value="{!obj.Quantity}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Amount-' + idx}"
                                                                  onchange="{!c.fnChangeValue}" />
@@ -241,7 +242,8 @@
                                             </td>
                                             <td>
                                                 <lightning:input type="text" value="{!obj.Description}"
-                                                                 variant="label-hidden" />
+                                                                 variant="label-hidden"
+                                                                 onchange="{!c.fnChangeValue}" />
                                             </td>
                                         </tr>
                                     </aura:iteration>

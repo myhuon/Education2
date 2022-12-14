@@ -19,13 +19,18 @@ private class Opportunity_tr_test {
         Opportunity obj = new Opportunity();
         obj.Name = '테스트Opportunity';
         obj.AccountId = objAccount.Id;
-        obj.StageName = 'Closed Won';
+        obj.StageName = 'Prospecting';
         obj.CloseDate = System.today();
+        obj.LeadSource = 'Web';
+        obj.Amount = 10000;
 
         test.startTest();
 
         insert obj;
+
+        obj.StageName = 'Closed Won';
         update obj;
+
         delete obj;
         undelete obj;
 

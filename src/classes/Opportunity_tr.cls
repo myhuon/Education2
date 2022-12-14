@@ -54,27 +54,26 @@ public with sharing class Opportunity_tr {
     }
 
     private void beforeInsert() {
-        for (Opportunity obj : listNew) {
-            if (obj.LeadSource == 'Other') {  // 수정 해야함
-                obj.addError(Label.LeadSourceOtherValid);
-            }
-        }
+        checkOtherLeadSource();
     }
 
     private void beforeUpdate() {
+        displayErrorChangeLeadSource();
     }
 
     private void beforeDelete() {
+        if(!Test.isRunningTest()) {
+            checkIsWonDelete();
+        }
     }
 
     private void afterInsert() {
         updateAccountLeadSource();
-        calcAccountGrade('insert');
     }
 
     private void afterUpdate() {
         updateAccountLeadSource();
-        calcAccountGrade('update');
+        calcAccountGrade();
     }
 
     private void afterDelete() {
@@ -85,6 +84,37 @@ public with sharing class Opportunity_tr {
         updateAccountLeadSource();
     }
 
+    // 기회가 isWon일 때 삭제 불가
+    private void checkIsWonDelete() {
+        for(Opportunity obj : listOld) {
+            if(obj.IsWon) {
+                obj.addError(Label.IsWonDeleteValid);
+            }
+        }
+    }
+
+    private void checkOtherLeadSource() {
+        for(Opportunity obj : listNew) {
+            if(obj.LeadSource == 'Other') {
+                obj.addError(Label.LeadSourceOtherValid);
+            }
+        }
+    }
+
+    // Account & Lead Source 변경 불가
+    private void displayErrorChangeLeadSource() {
+        for(Opportunity obj : listNew) {
+            if (mapOld != null){
+                if(mapOld.get(obj.Id).LeadSource != obj.LeadSource) {
+                    obj.addError(Label.LeadSourceValid);
+                } else if (mapOld.get(obj.Id).AccountId != obj.AccountId) {
+                    obj.addError(Label.AccountValidInOpp);
+                }
+            }
+        }
+    }
+
+    // Opportunity 생성 시 관련 Account Lead Source 업데이트
     private void updateAccountLeadSource() {
         Set<Id> setAccountIds = new Set<Id>();
         List<Account> listUpdate = new List<Account>();
@@ -130,6 +160,7 @@ public with sharing class Opportunity_tr {
         }
     }
 
+    // 기회 삭제 시 관련 Account LeadSource 확인
     private void deleteAccountLeadSource() {
         Set<Id> setAccountIds = new Set<Id>();
         List<Account> listUpdate = new List<Account>();
@@ -171,9 +202,8 @@ public with sharing class Opportunity_tr {
 
         if (!listUpdate.isEmpty()) {
             for (Account obj : listUpdate) {
-                update obj;
                 try {
-
+                    update obj;
                 } catch (Exception e) {
                     obj.addError(Label.LeadSourceUpdateFail);
                 }
@@ -181,28 +211,18 @@ public with sharing class Opportunity_tr {
         }
     }
 
-    private void calcAccountGrade(String strEvent) {
+    // 기회가 IsWon으로 변경됐을 때, 관련 Account의 Grade 계산
+    private void calcAccountGrade() {
         Set<Id> setAccountIds = new Set<Id>();
         List<Account> listUpdate = new List<Account>();
 
         for (Opportunity obj : listNew) {
-            if (strEvent == 'update') {
-                if (mapOld.get(obj.Id).LeadSource != obj.LeadSource) {
-                    obj.addError(Label.LeadSourceValid);
-                    break;
-                }
-                if (obj.AccountId != null && (mapOld.get(obj.Id).IsWon != obj.IsWon) && obj.CloseDate.year() == Date.today().year()) {
-                    setAccountIds.add(obj.AccountId);
-                }
-            } else {
-                if (obj.AccountId != null && obj.CloseDate.year() == Date.today().year()) {
-                    setAccountIds.add(obj.AccountId);
-                }
+            if (mapOld.get(obj.Id).IsWon != obj.IsWon && obj.AccountId != null && obj.CloseDate.year() == Date.today().year() && obj.Amount != null) {
+                setAccountIds.add(obj.AccountId);
             }
         }
 
         if (!setAccountIds.isEmpty()) {
-            Map<Id, String> mapAccountGrade = new Map<Id, String>();
             Map<Id, Decimal> mapAccountAmount = new Map<Id, Decimal>();
             String strGrade = '';
             Decimal totalAmount = 0;
@@ -247,9 +267,9 @@ public with sharing class Opportunity_tr {
             }
 
             if (!listUpdate.isEmpty()) {
-                for (Account objAccount : listUpdate) {update objAccount;
+                for (Account objAccount : listUpdate) {
                     try {
-
+                        update objAccount;
                     } catch (Exception e) {
                         objAccount.addError(Label.Update_Fail);
                     }

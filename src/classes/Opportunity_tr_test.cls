@@ -21,8 +21,10 @@ private class Opportunity_tr_test {
         obj.AccountId = objAccount.Id;
         obj.StageName = 'Prospecting';
         obj.CloseDate = System.today();
-        obj.LeadSource = 'Web';
+        obj.LeadSource = 'Other';
         obj.Amount = 10000;
+
+        Opportunity_tr.isOtherClass = true;
 
         test.startTest();
 

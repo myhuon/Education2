@@ -36,6 +36,7 @@ public with sharing class Evaluation1 {
      * 예) 입력값이 123, 5 이면 00123, 입력값이 123, 2 이면 123, 입력값이 1234, 8 이면 00001234
      */
     public String getStrPatternIntegerToString(Integer intValue, Integer intDigit) {
+        // 별도 함수가 있음.
         String strReturn = '';
         Integer cnt = 0;
         Integer divIntValue = intValue;

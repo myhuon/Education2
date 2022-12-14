@@ -37,6 +37,8 @@ Opportunity가 등록될때마다 Opportunity의 LeadSource가 Account의 LeadSo
 */
 
 public with sharing class Opportunity_tr {
+    public static boolean isOtherClass = false;
+
     List<Opportunity> listNew = Trigger.new;
     List<Opportunity> listOld = Trigger.old;
     Map<Id, Opportunity> mapNew = (Map<Id, Opportunity>) Trigger.newMap;
@@ -53,7 +55,8 @@ public with sharing class Opportunity_tr {
     }
 
     private void beforeInsert() {
-        checkOtherLeadSource();
+        //checkOtherLeadSource();
+        validationOtherClass();
     }
 
     private void beforeUpdate() {
@@ -61,9 +64,7 @@ public with sharing class Opportunity_tr {
     }
 
     private void beforeDelete() {
-        if(!Test.isRunningTest()) {
-            checkIsWonDelete();
-        }
+        checkIsWonDelete();
     }
 
     private void afterInsert() {
@@ -83,10 +84,18 @@ public with sharing class Opportunity_tr {
         updateAccountLeadSource();
     }
 
+    private void validationOtherClass() {
+        for(Opportunity obj : listNew) {
+            if(obj.LeadSource == 'Other' && !isOtherClass) {
+                obj.addError(Label.LeadSourceOtherValid);
+            }
+        }
+    }
+
     // 기회가 isWon일 때 삭제 불가
     private void checkIsWonDelete() {
         for(Opportunity obj : listOld) {
-            if(obj.IsWon) {
+            if(obj.IsWon && !Test.isRunningTest()) {
                 obj.addError(Label.IsWonDeleteValid);
             }
         }

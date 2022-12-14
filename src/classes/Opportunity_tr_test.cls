@@ -27,10 +27,8 @@ private class Opportunity_tr_test {
         test.startTest();
 
         insert obj;
-
         obj.StageName = 'Closed Won';
         update obj;
-
         delete obj;
         undelete obj;
 

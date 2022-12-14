@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게&#10;2. Test Class">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게 해야함&#10;2. Test Class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,8 +67,8 @@
                       <entry key="APEXCLASS:EVALUATION1" value="1670551542000" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1670913609788" />
                       <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670915475000" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1670990395807" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1670990395807" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1670993683707" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1670993807874" />
                       <entry key="APEXTRIGGER:OPPORTUNITY" value="1670915594604" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670840907093" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPREMOVED_EVT" value="1670823264013" />
@@ -276,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670924183392</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게 해야함&#10;2. Test Class">
+      <created>1670990545945</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670990545945</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -297,9 +303,10 @@
     <MESSAGE value="DN_ 수정" />
     <MESSAGE value="수정 - Description&#10;저장 미완료" />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게&#10;2. Test Class" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게&#10;2. Test Class" />
+    <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게 해야함&#10;2. Test Class" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게 해야함&#10;2. Test Class" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670990271232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1670993811797" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

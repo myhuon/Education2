@@ -42,7 +42,6 @@ public with sharing class Opportunity_tr {
     Map<Id, Opportunity> mapNew = (Map<Id, Opportunity>) Trigger.newMap;
     Map<Id, Opportunity> mapOld = (Map<Id, Opportunity>) Trigger.oldMap;
 
-
     public void run() {
         if (Trigger.isBefore && Trigger.isInsert) beforeInsert();
         else if (Trigger.isBefore && Trigger.isUpdate) beforeUpdate();
@@ -93,10 +92,27 @@ public with sharing class Opportunity_tr {
         }
     }
 
+    // API Enabled Profile을 가진 사용자가 기회 생성하는 경우가 아니라면, LeadSource 'Other'로 생성 불가능
     private void checkOtherLeadSource() {
+        List<Opportunity> listTarget = new List<Opportunity>();
+
         for(Opportunity obj : listNew) {
             if(obj.LeadSource == 'Other') {
-                obj.addError(Label.LeadSourceOtherValid);
+                listTarget.add(obj);
+            }
+        }
+
+        if(!listTarget.isEmpty()) {
+            Set<Id> setApiEnable = new Map<Id, Profile>([
+                    SELECT Id
+                    FROM Profile
+                    WHERE PermissionsApiEnabled =: true
+            ]).keySet();
+
+            if(!setApiEnable.contains(UserInfo.getProfileId())){
+                for(Opportunity obj : listTarget) {
+                    obj.addError(Label.LeadSourceOtherValid);
+                }
             }
         }
     }

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. checkOtherLeadSource 질문 필요..">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정">
+      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils_test.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils_test.cls-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" afterDir="false" />
     </list>
@@ -69,8 +72,10 @@
                       <entry key="APEXCLASS:EVALUATION1" value="1670998492755" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1670913609788" />
                       <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670915475000" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671009826793" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671009834497" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671011149153" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
+                      <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
+                      <entry key="APEXCLASS:TESTUTILS_TEST" value="1671011279000" />
                       <entry key="APEXTRIGGER:OPPORTUNITY" value="1670915594604" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1670840907093" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPREMOVED_EVT" value="1670823264013" />
@@ -135,7 +140,7 @@
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\Test" />
     </key>
   </component>
-  <component name="RunManager" selected="Apex Unit Tests.Opportunity_tr_test">
+  <component name="RunManager" selected="Apex Unit Tests.TestUtils_test">
     <configuration name="Evaluation1_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="allTests" value="false" />
       <option name="allowRunningInParallel" value="false" />
@@ -212,8 +217,47 @@
       <option name="workflowLogLevel" value="INFO" />
       <method v="2" />
     </configuration>
+    <configuration name="TestUtils_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allTests" value="false" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="apexLogLevel" value="DEBUG" />
+      <option name="calloutsLogLevel" value="INFO" />
+      <option name="connectionName" value="Education2" />
+      <option name="connectionType" value="MDAPI" />
+      <option name="contextConfiguration" value="true" />
+      <option name="databaseLogLevel" value="INFO" />
+      <option name="logLevelsInitialized" value="false" />
+      <option name="moduleToTestClassNames">
+        <map>
+          <entry key="Education2">
+            <value>
+              <set>
+                <option value="TestUtils_test" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="nbaLogLevel" value="INFO" />
+      <option name="profilingLogLevel" value="INFO" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="systemLogLevel" value="DEBUG" />
+      <option name="testClassToTestMethodNames">
+        <map />
+      </option>
+      <option name="testSuiteName" />
+      <option name="validationLogLevel" value="INFO" />
+      <option name="visualforceLogLevel" value="INFO" />
+      <option name="waveLogLevel" value="INFO" />
+      <option name="workflowLogLevel" value="INFO" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Apex Unit Tests.TestUtils_test" />
         <item itemvalue="Apex Unit Tests.Opportunity_tr_test" />
         <item itemvalue="Apex Unit Tests.Evaluation1_test" />
       </list>
@@ -298,7 +342,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670996210747</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정">
+      <created>1671010050624</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1671010050624</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -322,9 +373,10 @@
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr]&#10;1. Other 생성 다른 클래스에서 가능하게 해야함&#10;2. Test Class" />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료" />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. checkOtherLeadSource 질문 필요.." />
-    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. checkOtherLeadSource 질문 필요.." />
+    <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671009839801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$TestUtils_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671011283663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

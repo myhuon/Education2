@@ -11,28 +11,22 @@
  */
 @IsTest
 private class Opportunity_tr_test {
+    @TestSetup
+    static void testSetup() {
+        Account objAccount = TestUtils.createAccount();
+        Opportunity objOpp1 = TestUtils.createOpportunity(objAccount.Id);
+    }
+
     static testMethod void doTest() {
-        Account objAccount = new Account();
-        objAccount.Name = '테스트Account';
-        insert objAccount;
-
-        Opportunity obj = new Opportunity();
-        obj.Name = '테스트Opportunity';
-        obj.AccountId = objAccount.Id;
-        obj.StageName = 'Prospecting';
-        obj.CloseDate = System.today();
-        obj.LeadSource = 'Other';
-        obj.Amount = 10000;
-
-        Opportunity_tr.isOtherClass = true;
+        List<Account> listAcc = [SELECT Id FROM Account LIMIT 1];
 
         test.startTest();
+        Opportunity objOpp2 = TestUtils.createOpportunity(listAcc[0].Id);
 
-        insert obj;
-        obj.StageName = 'Closed Won';
-        update obj;
-        delete obj;
-        undelete obj;
+        objOpp2.StageName = 'Closed Won';
+        update objOpp2;
+        delete objOpp2;
+        undelete objOpp2;
 
         test.stopTest();
     }

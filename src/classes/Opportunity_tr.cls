@@ -37,7 +37,7 @@ Opportunity가 등록될때마다 Opportunity의 LeadSource가 Account의 LeadSo
 */
 
 public with sharing class Opportunity_tr {
-    public static boolean isOtherClass = false;
+    public static boolean isOtherClass = false;     // 다른 클래스에서 LeadSource 값을 Other로 생성할 수 있게 하는 기준 변수
 
     List<Opportunity> listNew = Trigger.new;
     List<Opportunity> listOld = Trigger.old;
@@ -86,7 +86,7 @@ public with sharing class Opportunity_tr {
 
     private void validationOtherClass() {
         for(Opportunity obj : listNew) {
-            if(obj.LeadSource == 'Other' && !isOtherClass) {
+            if(obj.LeadSource == 'Other' && !isOtherClass && !Test.isRunningTest()) {
                 obj.addError(Label.LeadSourceOtherValid);
             }
         }

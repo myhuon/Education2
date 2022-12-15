@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정">
-      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils.cls-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils_test.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/TestUtils_test.cls-meta.xml" afterDir="false" />
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation1_test.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation1_test.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr_test.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,10 +66,10 @@
                     <map>
                       <entry key="APEXCLASS:ACCOUNTDATACONTROLLER" value="1670570660000" />
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1670838723635" />
-                      <entry key="APEXCLASS:EVALUATION1" value="1670998492755" />
-                      <entry key="APEXCLASS:EVALUATION1_TEST" value="1670913609788" />
+                      <entry key="APEXCLASS:EVALUATION1" value="1671087816166" />
+                      <entry key="APEXCLASS:EVALUATION1_TEST" value="1671065190566" />
                       <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1670915475000" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671011149153" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671065061509" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS_TEST" value="1671011279000" />
@@ -140,7 +137,7 @@
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\Test" />
     </key>
   </component>
-  <component name="RunManager" selected="Apex Unit Tests.TestUtils_test">
+  <component name="RunManager" selected="Apex Unit Tests.Evaluation1_test">
     <configuration name="Evaluation1_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="allTests" value="false" />
       <option name="allowRunningInParallel" value="false" />
@@ -257,9 +254,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Apex Unit Tests.Evaluation1_test" />
         <item itemvalue="Apex Unit Tests.TestUtils_test" />
         <item itemvalue="Apex Unit Tests.Opportunity_tr_test" />
-        <item itemvalue="Apex Unit Tests.Evaluation1_test" />
       </list>
     </recent_temporary>
   </component>
@@ -349,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671010050624</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성">
+      <created>1671011475756</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1671011475756</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -374,9 +378,10 @@
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료" />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. checkOtherLeadSource 질문 필요.." />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정" />
+    <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$TestUtils_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671011283663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$Evaluation1_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671087818276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

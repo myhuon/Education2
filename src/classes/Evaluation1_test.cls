@@ -17,9 +17,18 @@ public with sharing class Evaluation1_test {
 
         Test.startTest();
 
-        System.debug('[getResult3And5] result : '+ evaluation1.getResult3And5(20));
-        System.debug('[getStrPatternIntegerToString] result : '+evaluation1.getStrPatternIntegerToString(123, 5));
-        System.debug('[getStrFormatYyyyMmDd] result : '+evaluation1.getStrFormatYyyyMmDd(Date.today()));
+        // System.assertEquals(value1, value2); 를 사용해서 맞는 결과값인지 확인
+        System.assertEquals(new Evaluation1().getResult3And5(10), 33);
+        System.assertEquals(new Evaluation1().getResult3And5(20), 98);
+
+        System.assertEquals(new Evaluation1().getStrPatternIntegerToString(123, 5), '00123');
+        System.assertEquals(new Evaluation1().getStrPatternIntegerToString(123, 2), '123');
+        System.assertEquals(new Evaluation1().getStrPatternIntegerToString(1234, 8), '00001234');
+
+        System.assertEquals(new Evaluation1().getStrFormatYyyyMmDd(Date.newInstance(2022, 10, 4)), '20221004');
+        System.assertEquals(new Evaluation1().getStrFormatYyyyMmDd(Date.newInstance(2022, 1, 4)), '20220104');
+        System.assertEquals(new Evaluation1().getStrFormatYyyyMmDd(Date.newInstance(2022, 12, 25)), '20221225');
+        System.assertEquals(new Evaluation1().getStrFormatYyyyMmDd(Date.newInstance(2022, 1, 2)), '20220102');
 
         Test.stopTest();
     }

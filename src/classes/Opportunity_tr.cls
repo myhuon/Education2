@@ -84,6 +84,7 @@ public with sharing class Opportunity_tr {
         updateAccountLeadSource();
     }
 
+    // isOtherClass 정적변수가 false일 경우는 LeadSource를 'Other'로 생성할 수 없음
     private void validationOtherClass() {
         for(Opportunity obj : listNew) {
             if(obj.LeadSource == 'Other' && !isOtherClass && !Test.isRunningTest()) {
@@ -101,6 +102,7 @@ public with sharing class Opportunity_tr {
         }
     }
 
+    // checkOtherLeadSource() 대신 validationOtherClass()로 대체
     // API Enabled Profile을 가진 사용자가 기회 생성하는 경우가 아니라면, LeadSource 'Other'로 생성 불가능
     private void checkOtherLeadSource() {
         List<Opportunity> listTarget = new List<Opportunity>();

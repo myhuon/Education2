@@ -36,23 +36,14 @@ public with sharing class Evaluation1 {
      * 예) 입력값이 123, 5 이면 00123, 입력값이 123, 2 이면 123, 입력값이 1234, 8 이면 00001234
      */
     public String getStrPatternIntegerToString(Integer intValue, Integer intDigit) {
-        // 별도 함수가 있음.
         String strReturn = '';
-        Integer cnt = 0;
-        Integer divIntValue = intValue;
 
-        while(divIntValue > 0){
-            divIntValue /= 10;
-            cnt++;
+        String strValue = String.valueOf(intValue);
+        if(intDigit > strValue.length()) {
+            strReturn = strValue.leftPad(intDigit, '0');
+        } else {
+            strReturn = strValue;
         }
-
-        if(cnt < intDigit) {
-            Integer loopNum = intDigit - cnt;
-            for (Integer i = 0; i < loopNum; i++) {
-                strReturn += '0';
-            }
-        }
-        strReturn += String.valueOf(intValue);
 
         return strReturn;
     }
@@ -64,7 +55,7 @@ public with sharing class Evaluation1 {
      * 예) 2022-12-01 이면 '20221201' 로 return
      */
     public String getStrFormatYyyyMmDd(Date dtValue) {
-        String strReturn;
+        String strReturn = '';
 
         strReturn = String.valueOf(DateTime.newInstance(dtValue.year(), dtValue.month(), dtValue.day()).format('yyyyMMdd'));
 

@@ -46,6 +46,8 @@
                             component.set("v.listData", listData);
                             component.set("v.listDeleteTargetId", []);
                             component.set("v.listSelectedData", []);
+                            component.set("v.listUpdate", []);
+                            component.set("v.mapUpdate", {});
                             component.find("selectAll").set("v.checked", false);
                             this.doChangeTotal(component, event, helper);
                             his.doSetDisability(component, event, helper);
@@ -66,7 +68,8 @@
             doSave: function (component, event, helper, draftValues) {
                 console.log('[doSave] Start ==============================>');
                 component.set("v.toggleSpinner", true);
-                //var objOrder = component.get("v.objOrder");
+                this.doChangeTotal(component, event, helper);
+
                 var action = component.get("c.saveRecord");
 
                 action.setParams({
@@ -77,6 +80,8 @@
                     var state = response.getState();
                     if (state === "SUCCESS") {
                         component.set("v.listUpdate", []);
+                        component.set("v.mapUpdate", {});
+                        console.log("%%%%%%%%%%%%%%% : ", component.get("v.listUpdate"));
                         this.doChangeTotal(component, event, helper);
                         helper.showToast("success", "Save Success!");
                         console.log('[doSave] SUCCESS!!! ==============================>');
@@ -85,7 +90,7 @@
                     } else if (state === "ERROR") {
                         var errors = response.getError();
                         if (errors) {
-                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                            this.showToast("error", $A.get("$Label.c.isEmptyRequiredField"));
                         } else {
                             this.showToast("error", "Unknown error");
                         }
@@ -134,101 +139,50 @@
                 console.log('[changeValue] type : ', type);
                 console.log('[changeValue] idx : ', idx);
                 console.log('[changeValue] targetValue : ', targetValue);
+
                 let ListData = component.get("v.listData");
                 let objData = ListData[idx];
+                let recordId = component.get("v.recordId");
                 var listUpdate = component.get("v.listUpdate");
-                /*var objOrder = component.get("v.objOrder");
-                console.log('[changeValue] objOrder : ', objOrder);*/
+                var mapUpdate = component.get("v.mapUpdate");
                 console.log('[changeValue] before changed', objData);
-                //let qty = ((objData.Quantity !== undefined || objData.Quantity !== null) && objData.Quantity instanceof String) ? parseFloat(objData.Quantity) : objData.Quantity;
-                //let objPricebook = component.get("v.listPricebookEntry")
-                //switch (type) {
-                    //case 'Amount':
-                    var targetField = '';
-                    switch (type) {
-                        case 'Amount':
-                            targetField = 'qty';
-                            break;
-                        case 'Price':
-                            targetField = 'unitprice';
-                            break;
-                        case 'Description':
-                            targetField = 'description';
-                            break;
-                    }
 
-                        console.log('[changeValue] Amount');
-                        if(!$A.util.isEmpty(targetValue)){
-                           //objData.Quantity = parseFloat(targetValue);
-                           // if (objOrder.fm_DEAL_TYPE__c != undefined) {
-                                component.set("v.listData", ListData);
-                                component.set("v.toggleSpinner", true);
+                if(!$A.util.isEmpty(targetValue)){
+                    component.set("v.listData", ListData);
+                    component.set("v.toggleSpinner", true);
 
-                                var action = component.get("c.getResourcePrice");
-                                action.setParams({
-                                    productId: ListData[idx].Product2Id,
-                                    recordId: component.get("v.recordId"),
-                                    itemId : objData.Id,
-                                    targetField : targetField,
-                                    targetValue : targetValue
-                                });
-                                action.setCallback(this, function (response) {
-                                    var state = response.getState();
-                                    if (state === "SUCCESS") {
-                                        var result = response.getReturnValue();
-                                        console.log('[changeValue] result', result);
-                                        if(result != null){
-                                            console.log('[doSave] listUpdate1 : ', listUpdate);
-                                            listUpdate.push(result);
-                                            console.log('[doSave] listUpdate2 : ', listUpdate);
-                                            component.set("v.listUpdate", listUpdate);
-                                            console.log('[doSave] listUpdate3 : ', listUpdate);
-                                        }
-                                        /*if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
-                                            objData.ListPrice__c = result['objPricebookByItem'].ListPrice;
-                                            if(objData.DC__c != 0 && !$A.util.isEmpty(objData.UnitPrice)) {
-                                                if (objData.AdditionalDiscount__c != 0) {
-                                                    objData.UnitPrice = objData.ListPrice__c * ((100 - objData.DC__c) * 0.01);
-                                                    objData.DiscountAmount__c = objData.ListPrice__c * (objData.DC__c * 0.01) * targetValue;
-                                                    objData.TotalPrice__c = objData.UnitPrice * targetValue;
-                                                } else {
-                                                    objData.DC__c = (100 - ((objData.UnitPrice / objData.ListPrice__c) * 100));
-                                                    objData.DiscountAmount__c = objData.ListPrice__c * (objData.DC__c * 0.01) * targetValue;
-                                                    objData.TotalPrice__c = objData.UnitPrice * targetValue;
-                                                }
-                                            } else {
-                                                objData.UnitPrice = objData.ListPrice__c;
-                                                objData.AdditionalDiscount__c = 0.0;
-                                                objData.DC__c = 0.0;
-                                                objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                                            }
-                                        }*/
-                                        /*if(!$A.util.isEmpty(result['objPricebookByItem'].ListPrice)) {
-                                            objData.ListPrice__c = result['objPricebookByItem'].ListPrice;
-                                            objData.UnitPrice = result['objPricebookByItem'].ListPrice;
-                                        }
-                                        objData.TotalPrice__c = objData.Quantity * objData.UnitPrice;
-                                        objData.DiscountAmount__c = 0.0;
-                                        objData.AdditionalDiscount__c = 0.0;
-                                        objData.DC__c = 0.0;*/
-                                        console.log('[changeValue] result of changed', JSON.stringify(objData));
-                                        //component.set("v.listData", ListData);
-
-                                    } else if (state === "ERROR") {
-                                          var errors = response.getError();
-                                          if (errors) {
-                                              if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
-                                          } else {
-                                              this.showToast("error", "Unknown error");
-                                          }
-                                      }
-                                      component.set("v.toggleSpinner", false);
-                                  });
-                                  $A.enqueueAction(action);
-                          //  }
+                    var action = component.get("c.doChangeValue");
+                    action.setParams({
+                        productId: ListData[idx].Product2Id,
+                        recordId: recordId,
+                        itemId : objData.Id,
+                        type : type,
+                        targetValue : targetValue,
+                        mapUpdate : mapUpdate,
+                        idx : idx
+                    });
+                    action.setCallback(this, function (response) {
+                        var state = response.getState();
+                        if (state === "SUCCESS") {
+                            var result = response.getReturnValue();
+                            console.log('[changeValue] result', result);
+                            if(result != null){
+                                console.log('[changeValue] listUpdate2 : ', mapUpdate);
+                                component.set("v.mapUpdate", result);
+                                console.log('[changeValue] listUpdate3 : ', JSON.stringify(mapUpdate));
+                            }
+                        } else if (state === "ERROR") {
+                            var errors = response.getError();
+                            if (errors) {
+                                if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                            } else {
+                                 this.showToast("error", "Unknown error");
+                            }
                         }
-                   // break;
-                //}
+                            component.set("v.toggleSpinner", false);
+                    });
+                    $A.enqueueAction(action);
+                }
                 component.set("v.toggleSpinner", false);
                 console.log('[changeValue] End ==============================>');
             },

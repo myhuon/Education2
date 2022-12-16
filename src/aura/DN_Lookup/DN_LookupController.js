@@ -17,10 +17,8 @@
 
         console.log('>>>> objectName : '+objectName);
 
-
         component.set('v.queryErrorMessage','');
         component.set('v.queryErrorFound',false);
-        component.set('v.lookupInputFocused',false);
 
         // 다중 선택인 경우 넘겨받은 오브젝트 리스트로 필 셋팅
         if(component.get('v.multiSelect')) {
@@ -50,6 +48,8 @@
 
         component.set('v.selectedIndex',undefined);
         component.set('v.searching',false);
+
+
     },
 
     // 검색어 입력란 이벤트
@@ -172,6 +172,7 @@
         }
 
     },
+
     inputBlurred : function(component, event, helper) {
 //        console.log('-------------------------------------------------------    DN_Lookup.inputBlurred - start');
 
@@ -183,9 +184,20 @@
             })
             , 200);
     },
-    inputInFocus : function(component, event, helper) {
-//        console.log('-------------------------------------------------------    DN_Lookup.inputInFocus - start');
+
+    inputFocus : function(component, event, helper) {
+        console.log('-------------------------------------------------------    DN_Lookup.inputInFocus - start');
+        component.set('v.isShowSpinner', true);
         component.set('v.lookupInputFocused',true);
+
+        var fields = component.get('v.fieldSet');
+        var sObjectType = component.get('v.objectName');
+        var limit = component.get('v.limit');
+        var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" LIMIT "+'3';
+
+        console.log(query);
+
+        helper.getInitLookupDatas(component, query);
     },
 
     // 검색 결과 li 이벤트
@@ -325,4 +337,38 @@
 
         return isValid;
     },
+
+
+        //
+        fnOnfocus : function(component, event, helper) {
+            console.log('-------------------------------------------------------    DN_Lookup.fnOnfocus - start');
+
+            var isEnterKey = event.keyCode === 13;
+
+            if(isEnterKey) {
+                component.set('v.isShowSpinner', true);
+
+                //var userEnteredValue = component.find('searchKey').get('v.value');
+                var comparisonField = component.get('v.comparisonField');
+                /*var comparisionStringArray = [];
+                for(var i = 0;i<comparisonField.length;i++) {
+                    comparisionStringArray.push(comparisonField[i]+" LIKE '%"+userEnteredValue+"%'");
+                }*/
+
+                var fields = component.get('v.fieldSet');
+                var sObjectType = component.get('v.objectName');
+                //var conditions = component.get('v.whereCondition');
+                var limit = component.get('v.limit');
+                //var comparisionString = comparisionStringArray.join(' OR ');
+
+                var query = "SELECT Id,"+fields.join(",")+" FROM "+sObjectType+" LIMIT "+limit;
+                /*if(conditions != undefined && conditions != '') {
+                    query = query +" "+ conditions;
+                }*/
+                // query += " LIMIT "+limit;
+                console.log(query);
+
+                helper.getLookupDatas(component, query);
+            }
+        },
 })

@@ -84,6 +84,11 @@
             }
             component.set('v.enteredValue','');
 
+            console.log('[onValueSelect] uniqueLookupIdentifier : ' + component.get('v.uniqueLookupIdentifier'));
+            console.log('[onValueSelect] selectedId : ' + component.get('v.selectedId'));
+            console.log('[onValueSelect] selectedLabel : ' + component.get('v.selectedLabel'));
+            console.log('[onValueSelect] selectedObject : ' + component.get('v.selectedObject'));
+
             var lookupSelectedEvent = component.getEvent('lookupSelected');
                 lookupSelectedEvent.setParams({
                     'uniqueLookupIdentifier' : component.get('v.uniqueLookupIdentifier'),
@@ -225,4 +230,51 @@
 
         evt.fire();
     },
+
+    getInitLookupDatas : function(component, query) {
+        console.log('[getInitLookupDatas] start -------------> ');
+            var action;
+            var isFirst = (component.get('v.tableColumns').length <= 0);
+
+            if(isFirst) {
+                action = component.get('c.getLookupDatas');
+                action.setParams({
+                    query : query,
+                    sObjectName : component.get('v.objectName'),
+                    fieldSet : component.get('v.fieldSet')
+                });
+            } else {
+                action = component.get('c.querySalesforceRecord');
+                action.setParams({
+                    queryString : query
+                });
+            }
+
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if(state === 'SUCCESS') {
+                    var result = response.getReturnValue();
+
+                    if(isFirst) {
+                        component.set('v.tableColumns', result.listColumns);
+                        component.set('v.tableDatas', result.listDatas);
+                    } else {
+                        component.set('v.objectList', result);
+                    }
+
+                    console.log('[getInitLookupDatas] result : ' + result);
+                    var dataLength = component.get('v.objectList').length;
+
+                    component.set('v.pageNumber', 1);
+                    component.set('v.total', dataLength);
+                    component.set('v.pages', Math.ceil(dataLength / 15));
+                    component.set('v.maxPage', Math.floor((dataLength + 19) / 20));
+
+                    this.doRenderPage(component);
+                }
+            });
+
+            console.log('[getInitLookupDatas] end -------------> ');
+            $A.enqueueAction(action);
+        },
 })

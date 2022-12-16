@@ -35,22 +35,15 @@ public with sharing class Evaluation2Controller {
 
     @AuraEnabled
     public static List<OpportunityLineItem> getInitData(String recordId) {
-        //String recordId = ApexPages.currentPage().GetParameters().get('recordId');
-
-        /*List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id
-                FROM OpportunityLineItem
-                WHERE OpportunityId =: recordId
-        ];*/
         List<OpportunityLineItem> listOpportunityLineItems = getOpportunityLineItems(recordId);
 
-        System.debug('**************** recordId : ' + recordId);
-        System.debug('%%%%%%%%%%%%%%%%%%% listOpp : ' + listOpportunityLineItems);
+        System.debug('[getInitData] recordId : ' + recordId);
+        System.debug('[getInitData] listOpp : ' + listOpportunityLineItems);
 
         return listOpportunityLineItems;
     }
 
-    @AuraEnabled
+    /*@AuraEnabled
     public static boolean saveRecord(List<OpportunityLineItem> draftValues){
         System.debug('&&&&&&&&&&&&&&&&&& controller draftValues : ' + draftValues);
         try {
@@ -61,47 +54,100 @@ public with sharing class Evaluation2Controller {
         } catch(Exception e) {
             return false;
         }
-    }
+    }*/
 
     @AuraEnabled
-    public static OpportunityLineItem getResourcePrice(Id productId, Id recordId, Id itemId, String targetField, String targetValue){
-        System.debug('[getResourcePrice] start ------------> ');
+    public static boolean saveRecord(Map<String, OpportunityLineItem> draftValues){
+        System.debug('&&&&&&&&&&&&&&&&&& controller draftValues : ' + draftValues);
 
-        //List<OpportunityLineItem> listOpportunityLineItems = getOpportunityLineItems(recordId);
-        OpportunityLineItem objChangeItem = getOpportunityLineItem(itemId);
+        List<Opportunity> objOpp = [
+                SELECT Id
+                FROM Opportunity
+                WHERE Id =: draftValues.values().get(0).OpportunityId
+        ];
 
-        if(objChangeItem != null) {
-            switch on targetField {
-                when 'qty' {
-                    objChangeItem.Quantity = Integer.valueOf(targetValue);
-                }
-                when 'unitprice' {
-                    objChangeItem.UnitPrice = Double.valueOf(targetValue);
-                }
-                when 'description' {
-                    objChangeItem.Description = targetValue;
-                }
+        for(OpportunityLineItem objItem : draftValues.values()) {
+            if(objItem.Quantity == null || objItem.TotalPrice == null) {
+                // Error 고의 발생 -> Helper에서 Error 메세지 띄움
+                objOpp[0].addError(Label.isEmptyRequiredField);
             }
         }
 
-        return objChangeItem;
-        /*List<OpportunityLineItem> listReturnItems = new List<OpportunityLineItem>();
-        for(OpportunityLineItem objItem : listOpportunityLineItems) {
-            if(objItem.Id == id){
-                switch on targetField {
-                    when 'qty' {
+        try {
+            //upsert draftValues;
+            //List<Database.SaveResult> results = Database.insert(draftValues.values(), true);
 
+            List<Database.upsertResult> results = Database.upsert(draftValues.values(), true);
+            System.debug('################### results : ' + results);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    @AuraEnabled
+    public static Map<Integer, OpportunityLineItem> doChangeValue(Id productId, Id recordId, Id itemId, String type, String targetValue, Map<Integer, OpportunityLineItem> mapUpdate, Integer idx){
+        System.debug('[getResourcePrice] start ------------> ');
+        System.debug('productId : ' + productId);
+        System.debug('itemId : ' + itemId);
+        System.debug('mapUpdate before : ' + mapUpdate);
+        System.debug('targetValue : ' + targetValue);
+
+        OpportunityLineItem objChangeItem = new OpportunityLineItem();
+
+        if(mapUpdate == null) mapUpdate = new Map<Integer, OpportunityLineItem>();
+
+        if(type != 'OpportunityLineItem') {
+            if(mapUpdate.get(idx) == null){
+                objChangeItem = getOpportunityLineItem(itemId);
+                switch on type {
+                    when 'Amount' {
+                        objChangeItem.Quantity = Integer.valueOf(targetValue);
                     }
-                    when 'unitprice' {
-
+                    when 'Price' {
+                        objChangeItem.UnitPrice = Double.valueOf(targetValue);
                     }
-                    when 'description' {
-
+                    when 'Description' {
+                        objChangeItem.Description = targetValue;
                     }
                 }
-            }
 
-            listReturnItems.add(objItem);
-        }*/
+                mapUpdate.put(idx, objChangeItem);
+            } else {
+                OpportunityLineItem objOppItem = mapUpdate.get(idx);
+                System.debug('objOppItem : ' + objOppItem);
+                switch on type {
+                    when 'Amount' {
+                        objOppItem.Quantity = Integer.valueOf(targetValue);
+                    }
+                    when 'Price' {
+                        objOppItem.UnitPrice = Double.valueOf(targetValue);
+                    }
+                    when 'Description' {
+                        objOppItem.Description = targetValue;
+                    }
+                }
+
+                mapUpdate.put(idx, objOppItem);
+            }
+        } else {
+            mapUpdate.put(idx, new OpportunityLineItem(OpportunityId = recordId, Product2Id = productId));
+        }
+
+        System.debug('mapUpdate after : ' + mapUpdate);
+        return mapUpdate;
+    }
+
+    @AuraEnabled
+    public static Map<Id, OpportunityLineItem> getResourcePrice(Id productId, Id recordId){
+        System.debug('[getResourcePrice] start ------------> ');
+        System.debug('productId : ' + productId);
+
+        OpportunityLineItem objItem = new OpportunityLineItem(OpportunityId = recordId, Product2Id = productId);
+        Map<Id, OpportunityLineItem> mapOppItem = new Map<Id, OpportunityLineItem>();
+        mapOppItem.put(productId, objItem);
+
+        System.debug('mapUpdate after : ' + mapOppItem);
+        return mapOppItem;
     }
 }

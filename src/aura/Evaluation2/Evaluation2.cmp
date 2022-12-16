@@ -52,6 +52,7 @@
     <aura:attribute name="DiscountAmountAllProduct" type="Integer"/>
     <aura:attribute name="DiscountedRateAllProduct" type="Integer"/>
     <aura:attribute name="listUpdate" type="List" default="[]"/>
+    <aura:attribute name="mapUpdate" type="map" default="{}"/>
 
     <!-- 수정/삭제 불가 Flag값-->
     <aura:attribute name="isAvailableDelete" type="Boolean" default="false"/>
@@ -142,27 +143,19 @@
                                    class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
                                 <aura:if isTrue="{!if(v.objRecordType == 'LRPOrder', false, true)}">
                                     <colgroup>
-                                        <col width=""/>
-                                        <col width="20%"/>      <!--Product-->
+                                        <col width="5%"/>
+                                        <col width="5%"/>
+                                        <col width="15%"/>      <!--Product-->
                                         <col width="15%"/>       <!--ListPrice-->
                                         <col width="15%"/>      <!--UnitPrice-->
                                         <col width="10%"/>      <!--Quantity-->
                                         <col width="15%"/>       <!--TotalPrice-->
-                                        <col width="25%"/>       <!--Description%-->
+                                        <col width="20%"/>       <!--Description%-->
                                     </colgroup>
-                                   <!-- <aura:set attribute="else">
-                                        <colgroup>
-                                            <col width=""/>
-                                            <col width="20%"/>      &lt;!&ndash;품목명&ndash;&gt;
-                                            <col width="35%"/>      &lt;!&ndash;규격&ndash;&gt;
-                                            <col width="10%"/>      &lt;!&ndash;재고이동수&ndash;&gt;
-                                            <col width="15%"/>      &lt;!&ndash;단가&ndash;&gt;
-                                            <col width="20%"/>      &lt;!&ndash;비고&ndash;&gt;
-                                        </colgroup>
-                                    </aura:set>-->
                                 </aura:if>
                                 <thead>
                                 <tr class="slds-line-height_reset">
+                                    <th></th>
                                     <th class="slds-text-align_right slds-cell_action-mode" scope="col"
                                         style="width:3.25rem">
                                         <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
@@ -172,7 +165,6 @@
                                                              onchange="{!c.fnSelectRow}"/>
                                         </div>
                                     </th>
-                                    <!--LRP Order는 화면 상에서 보여주는 Column이 상이함-->
                                     <aura:iteration items="{!v.TableDisplayList}" var="FieldValues" indexVar="ind">
                                         <th aria-label="Name" aria-sort="none"
                                             class="slds-is-resizable slds-is-sortable slds-cell_action-mode"
@@ -195,15 +187,18 @@
                                 <aura:if isTrue="{!v.listData.length > 0}">
                                     <aura:iteration items="{!v.listData}" var="obj" indexVar="idx">
                                         <tr aria-selected="false" class="slds-hint-parent">
+                                            <td class="" title="Seq" style="text-align:center">
+                                                <p>{!idx+1}</p>
+                                            </td>
                                             <td class="slds-text-align_center" role="gridcell">
                                                 <lightning:input type="checkbox" checked="{!obj.checked}" name="{!idx}"
                                                                  aura:Id="checkplz" onchange="{!c.fnSelectRow}"/>
                                             </td>
                                             <td class="slds-cell-wrap" title="{!obj.Name}">
                                                 <c:DN_Lookup aura:id="Lightning1"
-                                                             uniqueLookupIdentifier="{!'PricebookEntry-' + idx}"
+                                                             uniqueLookupIdentifier="{!'OpportunityLineItem-' + idx}"
                                                              objectName="OpportunityLineItem"
-                                                             fieldSet="['Name', 'ListPrice','UnitPrice', 'Quantity', 'TotalPrice', 'Description', 'Id']"
+                                                             fieldSet="['Name', 'ListPrice','UnitPrice', 'Quantity', 'TotalPrice', 'Description']"
                                                              limit="10000"
                                                              comparisonField="['Name','Product2Id']"
                                                              primaryDisplayField="Name"
@@ -211,7 +206,7 @@
                                                              lightningIconName="standard:product"
                                                              selectedId="{!obj.Product2Id}"
                                                              selectedLabel="{!obj.Name}"
-                                                             compact="true"
+                                                             compact="false"
                                                              readOnly="{!if(obj.Id != null, true, false)}"
                                                 />
                                             </td>
@@ -226,9 +221,10 @@
                                                 <lightning:input formatter="currency" type="number"
                                                                  value="{!obj.UnitPrice}" variant="label-hidden"
                                                                  class="{!'ItemList-Price-' + idx}"
-                                                                 onchange="{!c.fnChangeValue}" />
+                                                                 onchange="{!c.fnChangeValue}"
+                                                />
                                             </td>
-                                            <td class="">
+                                            <td class="" title="Quantity">
                                                 <lightning:input type="number" value="{!obj.Quantity}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Amount-' + idx}"
@@ -240,9 +236,10 @@
                                                                  value="{!obj.TotalPrice}" variant="label-hidden"
                                                                  disabled="true"/>
                                             </td>
-                                            <td>
+                                            <td class="" title="Description">
                                                 <lightning:input type="text" value="{!obj.Description}"
                                                                  variant="label-hidden"
+                                                                 class="{!'ItemList-Description-' + idx}"
                                                                  onchange="{!c.fnChangeValue}" />
                                             </td>
                                         </tr>
@@ -250,7 +247,7 @@
                                     <aura:set attribute="else">
                                         <tr>
                                             <td colspan="11" style="height:5rem; text-align:center">
-                                                {!$Label.c.Add_Products}
+                                                {!$Label.c.ProductListEmpty}
                                             </td>
                                         </tr>
                                     </aura:set>

@@ -15,7 +15,6 @@
                 component.set("v.toggleSpinner", true);
 
                 let TableDisplayList = [];
-                /*TableDisplayList.push('Seq');*/
                 TableDisplayList.push('Product');
                 TableDisplayList.push('ListPrice');
                 TableDisplayList.push('UnitPrice');
@@ -154,6 +153,7 @@
                     console.log('[fnChangeValue] target', target);
                     var type = target[1];
                     var idx = parseInt(target[2],10);
+                    console.log('[fnChangeValue] idx', idx);
 
                     helper.changeValue(component, event, helper, type, idx, targetValue);
                 } else {
@@ -172,13 +172,13 @@
                 console.log('[fnHandleSelected] Start =============================>');
                 var uniqueLookupIdentifier = event.getParam("uniqueLookupIdentifier").split('-');
                 console.log('[fnHandleSelected] uniqueLookupIdentifier', uniqueLookupIdentifier);
-                var targetValue = event.getParam("selectedId");
-                console.log('[fnHandleSelected] selectedId', targetValue);
-                if(targetValue.length > 0){
+                var productId = event.getParam("selectedId");
+                console.log('[fnHandleSelected] selectedId', productId);
+                if(productId.length > 0) {
                     var type = uniqueLookupIdentifier[0];
                     var idx = parseInt(uniqueLookupIdentifier[1],10);
 
-                    helper.changeValue(component, event, helper, type, idx, targetValue);
+                    helper.changeValue(component, event, helper, type, idx, productId);
                 }
                 console.log('[fnHandleSelected] End =============================>');
             },
@@ -215,9 +215,8 @@
                 console.log('[fnSave] Start =============================>');
                 component.set("v.toggleSpinner", true);
                 var validMessage = '';
-                //var data = component.get("v.listData");
-                var data = component.get("v.listUpdate");
-                console.log('[fnSave] v.listUpdate : ', data);
+                var data = component.get("v.mapUpdate");
+                console.log('[fnSave] v.mapUpdate : ', data.size);
 
                 if(validMessage != '') {
                     component.set("v.toggleSpinner", false);

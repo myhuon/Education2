@@ -81,7 +81,7 @@
                 <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open slds-combobox-lookup" aria-expanded="false" aria-haspopup="listbox" role="combobox">
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" style="{!v.selectedLabel == undefined || v.selectedLabel == '' ? '' : 'display:none;'}">
                         <ui:inputText disabled="{!v.readOnly}" aura:id="lookUpInputElement" value="{!v.enteredValue}" class="slds-input slds-combobox__input" updateOn="keyup"
-                                      keyup="{!c.searchRecords}" blur="{!c.inputBlurred}" focus="{!c.inputFocus}" placeholder="{!v.placeholder}"/>
+                                      keyup="{!c.searchRecords}" blur="{!c.inputBlurred}" click="{!c.inputFocus}" placeholder="{!v.placeholder}"/>
                         <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="Description of icon when needed">
                             <lightning:icon iconName="utility:search" size="x-small"/>
                             <span class="slds-assistive-text">Description of icon</span>

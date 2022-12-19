@@ -39,16 +39,13 @@
                 console.log('[fnSelectRow] data =============================>' + data);
                 let listSelectedData = component.get("v.listSelectedData");
 
-                //data.forEach(function(pl){ pl.checked = false; });
                 if (idx != 'selectAll') {
-                    //data.forEach(pl => pl.checked = false);
                     data[idx].checked = value;
                     if(value) {
                         listSelectedData.push(data[idx]);
                     } else {
                         listSelectedData.splice(listSelectedData.indexOf(data[idx]), 1);
                     }
-                    //component.set("v.dataIdx", idx);
                     component.set("v.listSelectedData", listSelectedData);
                     component.set("v.listData", data);
 
@@ -111,34 +108,24 @@
 
             fnDeleteRow: function(component, event, helper){
                 console.log('[fnDeleteRow] Start =============================>');
-                //var idx = parseInt(event.getSource().get("v.name"));
                 let listSelectedData = component.get("v.listSelectedData");
                 var data = component.get("v.listData");
                 var listDeleteTargetId = component.get("v.listDeleteTargetId");
 
-
                 console.log('[fnDeleteRow] listSelectedData 1111=============================> ' + JSON.stringify(listSelectedData));
                 for(var row of listSelectedData){
                     if(row.Id) {
-                        listDeleteTargetId.push({Id : row.Id});
+                        listDeleteTargetId.push(row.Id);
                     }
                     data.splice(data.indexOf(row), 1);
                 }
-                console.log('[fnDeleteRow] listDeleteTargetId =============================>' + JSON.stringify(listDeleteTargetId));
 
-        /*        if(data[idx].Id) {
-                    listDeleteTargetId.push({Id : data[idx].Id});
-                }
-                data.splice(idx,1);*/
-
-                if(listDeleteTargetId.length > 0)
-                    helper.deleteRow(component, event, helper, listDeleteTargetId);
+                if(listDeleteTargetId.length > 0) helper.deleteRow(component, event, helper, listDeleteTargetId);
 
                 component.set("v.listData", data);
                 component.set("v.listSelectedData", []);
                 console.log('[fnDeleteRow] listData =============================>' + data);
 
-                helper.doChangeTotal(component, event, helper);
                 component.set("v.isAvailableDelete", false);
                 console.log('[fnDeleteRow] End =============================>');
             },
@@ -216,7 +203,7 @@
                 component.set("v.toggleSpinner", true);
                 var validMessage = '';
                 var data = component.get("v.mapUpdate");
-                console.log('[fnSave] v.mapUpdate : ', data.size);
+                console.log('[fnSave] v.mapUpdate : ', JSON.stringify(data));
 
                 if(validMessage != '') {
                     component.set("v.toggleSpinner", false);

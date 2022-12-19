@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="레코드 추가 안됨...">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="Opportunity_tr.cls 코드 보완">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,19 +71,19 @@
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1670838723635" />
                       <entry key="APEXCLASS:EVALUATION1" value="1671087909563" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1671065190566" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671182669000" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671422132091" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671438975412" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671422531701" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS_TEST" value="1671011279000" />
                       <entry key="APEXTRIGGER:OPPORTUNITY" value="1670915594604" />
-                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1671178307961" />
+                      <entry key="AURADEFINITIONBUNDLE:DN_LOOKUP" value="1671433908555" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPREMOVED_EVT" value="1670823264013" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPRESULT" value="1670823270692" />
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPSELECTED_EVT" value="1670823256000" />
                       <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670823277396" />
                       <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822830285" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671182669000" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671438711785" />
                       <entry key="AURADEFINITIONBUNDLE:EVALUATION2_1" value="1670818826516" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                       <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
@@ -365,7 +370,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671183529621</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Opportunity_tr.cls 코드 보완">
+      <created>1671422261446</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1671422261446</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -393,7 +405,8 @@
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성" />
     <MESSAGE value="Evaluation1.getStrPatternIntegerToString 수정" />
     <MESSAGE value="레코드 추가 안됨..." />
-    <option name="LAST_COMMIT_MESSAGE" value="레코드 추가 안됨..." />
+    <MESSAGE value="Opportunity_tr.cls 코드 보완" />
+    <option name="LAST_COMMIT_MESSAGE" value="Opportunity_tr.cls 코드 보완" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671422147047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />

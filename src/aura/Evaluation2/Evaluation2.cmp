@@ -47,10 +47,6 @@
     <aura:attribute name="draftValueMap" type="Map" default="{}"/>
     <aura:attribute name="draftValues" type="Object" default="[]"/>
     <aura:attribute name="dataIdx" type="Integer"/>
-    <aura:attribute name="TotalQuantityAllProduct" type="Integer"/>
-    <aura:attribute name="TotalPriceAllProduct" type="Integer"/>
-    <aura:attribute name="DiscountAmountAllProduct" type="Integer"/>
-    <aura:attribute name="DiscountedRateAllProduct" type="Integer"/>
     <aura:attribute name="listUpdate" type="List" default="[]"/>
     <aura:attribute name="mapUpdate" type="map" default="{}"/>
 
@@ -77,7 +73,7 @@
     <aura:attribute name="statusMsg" type="String" default="None"/>
     <aura:attribute name="lastUpdate" type="String"/>
     <aura:attribute name="toggleSpinner" type="Boolean" default="false"/>
-
+    <aura:attribute name="isRequiredFieldEmpty" type="Boolean" default="false"/>
 
     <!-- Button Add Row
     <div style="text-align:right; margin:5px">
@@ -197,15 +193,15 @@
                                             <td class="slds-cell-wrap" title="{!obj.Name}">
                                                 <c:DN_Lookup aura:id="Lightning1"
                                                              uniqueLookupIdentifier="{!'OpportunityLineItem-' + idx}"
-                                                             objectName="OpportunityLineItem"
-                                                             fieldSet="['Name', 'ListPrice','UnitPrice', 'Quantity', 'TotalPrice', 'Description']"
+                                                             objectName="Product2"
+                                                             fieldSet="['Name']"
                                                              limit="10000"
                                                              comparisonField="['Name','Product2Id']"
                                                              primaryDisplayField="Name"
                                                              minimumCharacter="2"
                                                              lightningIconName="standard:product"
                                                              selectedId="{!obj.Product2Id}"
-                                                             selectedLabel="{!obj.Name}"
+                                                             selectedLabel="{!obj.Product2.Name}"
                                                              compact="false"
                                                              readOnly="{!if(obj.Id != null, true, false)}"
                                                 />

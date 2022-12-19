@@ -153,7 +153,6 @@ public with sharing class Opportunity_tr {
     // Opportunity 생성 시 관련 Account Lead Source 업데이트
     private void updateAccountLeadSource() {
         Set<Id> setAccountIds = new Set<Id>();
-        List<Account> listUpdate = new List<Account>();
         Map<Id, Set<String>> mapAccLeadSources = new Map<Id, Set<String>>();
         Set<String> setNewLeadSources = new Set<String>();
 
@@ -191,7 +190,6 @@ public with sharing class Opportunity_tr {
     // 기회 삭제 시 관련 Account LeadSource 확인
     private void deleteAccountLeadSource() {
         Set<Id> setAccountIds = new Set<Id>();
-        List<Account> listUpdate = new List<Account>();
         Map<Id, Set<String>> mapAccLeadSources = new Map<Id, Set<String>>();
 
         for (Opportunity obj : listOld) {
@@ -232,7 +230,6 @@ public with sharing class Opportunity_tr {
     // 기회가 IsWon으로 변경됐을 때, 관련 Account의 Grade 계산
     private void calcAccountGrade() {
         Set<Id> setAccountIds = new Set<Id>();
-        List<Account> listUpdate = new List<Account>();
 
         for (Opportunity obj : listNew) {
             if (mapOld.get(obj.Id).IsWon != obj.IsWon && obj.AccountId != null && obj.CloseDate.year() == Date.today().year() && obj.Amount != null) {

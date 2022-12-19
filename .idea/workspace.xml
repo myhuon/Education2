@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="Evaluation1.getStrPatternIntegerToString 수정">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="레코드 추가 안됨...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_Lookup.cmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/DN_Lookup/DN_LookupHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Opportunity_tr.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +67,7 @@
                       <entry key="APEXCLASS:EVALUATION1" value="1671087909563" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1671065190566" />
                       <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671182669000" />
-                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671088323942" />
+                      <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671422132091" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS_TEST" value="1671011279000" />
@@ -121,16 +115,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/송현수/IntelliJ/Vault",
-    "settings.editor.selected.configurable": "fileTemplates"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/송현수/IntelliJ/Vault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\aura\OrderItemList" />
@@ -364,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671087963320</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="레코드 추가 안됨...">
+      <created>1671183529621</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1671183529621</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -391,9 +392,10 @@
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;[Opporutnity_tr] 완료(?)&#10;1. LeadSource Other 수정" />
     <MESSAGE value="[Evaluation]&#10;1. 수정 - Description&#10;2. 저장 미완료 &#10;&#10;TestUtils 생성" />
     <MESSAGE value="Evaluation1.getStrPatternIntegerToString 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Evaluation1.getStrPatternIntegerToString 수정" />
+    <MESSAGE value="레코드 추가 안됨..." />
+    <option name="LAST_COMMIT_MESSAGE" value="레코드 추가 안됨..." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671088755497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671422147047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

@@ -38,6 +38,7 @@ Opportunity가 등록될때마다 Opportunity의 LeadSource가 Account의 LeadSo
 
 public with sharing class Opportunity_tr {
     public static boolean isOtherClass = false;     // 다른 클래스에서 LeadSource 값을 Other로 생성할 수 있게 하는 기준 변수
+    private Map<Id, Account> mapAccountUpdate = new Map<Id, Account>();
 
     List<Opportunity> listNew = Trigger.new;
     List<Opportunity> listOld = Trigger.old;
@@ -69,25 +70,33 @@ public with sharing class Opportunity_tr {
 
     private void afterInsert() {
         updateAccountLeadSource();
+
+        if (!mapAccountUpdate.isEmpty()) update mapAccountUpdate.values();
     }
 
     private void afterUpdate() {
         updateAccountLeadSource();
         calcAccountGrade();
+
+        if (!mapAccountUpdate.isEmpty()) update mapAccountUpdate.values();
     }
 
     private void afterDelete() {
         deleteAccountLeadSource();
+
+        if (!mapAccountUpdate.isEmpty()) update mapAccountUpdate.values();
     }
 
     private void afterUndelete() {
         updateAccountLeadSource();
+
+        if (!mapAccountUpdate.isEmpty()) update mapAccountUpdate.values();
     }
 
     // isOtherClass 정적변수가 false일 경우는 LeadSource를 'Other'로 생성할 수 없음
     private void validationOtherClass() {
-        for(Opportunity obj : listNew) {
-            if(obj.LeadSource == 'Other' && !isOtherClass && !Test.isRunningTest()) {
+        for (Opportunity obj : listNew) {
+            if (obj.LeadSource == 'Other' && !isOtherClass && !Test.isRunningTest()) {
                 obj.addError(Label.LeadSourceOtherValid);
             }
         }
@@ -95,8 +104,8 @@ public with sharing class Opportunity_tr {
 
     // 기회가 isWon일 때 삭제 불가
     private void checkIsWonDelete() {
-        for(Opportunity obj : listOld) {
-            if(obj.IsWon && !Test.isRunningTest()) {
+        for (Opportunity obj : listOld) {
+            if (obj.IsWon && !Test.isRunningTest()) {
                 obj.addError(Label.IsWonDeleteValid);
             }
         }
@@ -107,21 +116,21 @@ public with sharing class Opportunity_tr {
     private void checkOtherLeadSource() {
         List<Opportunity> listTarget = new List<Opportunity>();
 
-        for(Opportunity obj : listNew) {
-            if(obj.LeadSource == 'Other') {
+        for (Opportunity obj : listNew) {
+            if (obj.LeadSource == 'Other') {
                 listTarget.add(obj);
             }
         }
 
-        if(!listTarget.isEmpty()) {
+        if (!listTarget.isEmpty()) {
             Set<Id> setApiEnable = new Map<Id, Profile>([
                     SELECT Id
                     FROM Profile
-                    WHERE PermissionsApiEnabled =: true
+                    WHERE PermissionsApiEnabled = :true
             ]).keySet();
 
-            if(!setApiEnable.contains(UserInfo.getProfileId())){
-                for(Opportunity obj : listTarget) {
+            if (!setApiEnable.contains(UserInfo.getProfileId())) {
+                for (Opportunity obj : listTarget) {
                     obj.addError(Label.LeadSourceOtherValid);
                 }
             }
@@ -130,9 +139,9 @@ public with sharing class Opportunity_tr {
 
     // Account & Lead Source 변경 불가
     private void displayErrorChangeLeadSource() {
-        for(Opportunity obj : listNew) {
-            if (mapOld != null){
-                if(mapOld.get(obj.Id).LeadSource != obj.LeadSource) {
+        for (Opportunity obj : listNew) {
+            if (mapOld != null) {
+                if (mapOld.get(obj.Id).LeadSource != obj.LeadSource) {
                     obj.addError(Label.LeadSourceValid);
                 } else if (mapOld.get(obj.Id).AccountId != obj.AccountId) {
                     obj.addError(Label.AccountValidInOpp);
@@ -153,6 +162,8 @@ public with sharing class Opportunity_tr {
                 setAccountIds.add(obj.AccountId);
                 if (mapAccLeadSources.get(obj.AccountId) != null) {
                     setNewLeadSources = mapAccLeadSources.get(obj.AccountId);
+                } else {
+                    setNewLeadSources = new Set<String>();
                 }
                 setNewLeadSources.add(obj.LeadSource);
                 mapAccLeadSources.put(obj.AccountId, setNewLeadSources);
@@ -172,17 +183,7 @@ public with sharing class Opportunity_tr {
                 setLeadSource.addAll(mapAccLeadSources.get(obj.Id));
 
                 obj.LeadSource__c = String.join((Iterable<String>) setLeadSource, ';');
-                listUpdate.add(obj);
-            }
-        }
-
-        if (!listUpdate.isEmpty()) {
-            for (Account obj : listUpdate) {
-                try {
-                    update obj;
-                } catch (Exception e) {
-                    obj.addError(Label.LeadSourceUpdateFail);
-                }
+                mapAccountUpdate.put(obj.Id, obj);
             }
         }
     }
@@ -223,17 +224,7 @@ public with sharing class Opportunity_tr {
                 } else {
                     obj.LeadSource__c = '';
                 }
-                listUpdate.add(obj);
-            }
-        }
-
-        if (!listUpdate.isEmpty()) {
-            for (Account obj : listUpdate) {
-                try {
-                    update obj;
-                } catch (Exception e) {
-                    obj.addError(Label.LeadSourceUpdateFail);
-                }
+                mapAccountUpdate.put(obj.Id, obj);
             }
         }
     }
@@ -250,27 +241,26 @@ public with sharing class Opportunity_tr {
         }
 
         if (!setAccountIds.isEmpty()) {
-            Map<Id, Decimal> mapAccountAmount = new Map<Id, Decimal>();
-            String strGrade = '';
-            Decimal totalAmount = 0;
-
-            for (Opportunity obj : [
-                    SELECT AccountId, Account.GradeLastYear__c, Account.Grade__c, Account.IsWonOppTotalAmount__c, Amount
+            List<AggregateResult> listResults = [
+                    SELECT AccountId, Sum(Amount) amount
                     FROM Opportunity
-                    WHERE AccountId IN :setAccountIds
-            ]) {
-                totalAmount = (mapAccountAmount.get(obj.AccountId) == null) ?
-                        (obj.Account.IsWonOppTotalAmount__c != null ? obj.Account.IsWonOppTotalAmount__c + obj.Amount : obj.Amount) : mapAccountAmount.get(obj.AccountId) + obj.Amount;
+                    WHERE AccountId IN :setAccountIds AND IsWon = TRUE AND CALENDAR_YEAR(CloseDate) = :Date.today().year()
+                    GROUP BY AccountId
+            ];
 
-                mapAccountAmount.put(obj.AccountId, totalAmount);
+            Map<Id, Decimal> mapResult = new Map<Id, Decimal>();
+            for (AggregateResult obj : listResults) {
+                mapResult.put((Id) obj.get('AccountId'), (Decimal) obj.get('amount')); // 꺼내오는 필드 값이 object 형태로 가져와서 타입 캐스팅 필요
             }
 
+            String strGrade = '';
+            Decimal totalAmount = 0;
             for (Account objAccount : [
                     SELECT Id, GradeLastYear__c, Grade__c, IsWonOppTotalAmount__c
                     FROM Account
                     WHERE Id IN :setAccountIds
             ]) {
-                totalAmount = mapAccountAmount.get(objAccount.Id);
+                totalAmount = mapResult.get(objAccount.Id);
                 if (totalAmount >= Decimal.valueOf(Label.GradeA)) {
                     strGrade = 'A';
                 } else if (totalAmount >= Decimal.valueOf(Label.GradeB)) {
@@ -288,19 +278,8 @@ public with sharing class Opportunity_tr {
                 } else {
                     objAccount.Grade__c = strGrade;
                 }
-                objAccount.IsWonOppTotalAmount__c = totalAmount;
 
-                listUpdate.add(objAccount);
-            }
-
-            if (!listUpdate.isEmpty()) {
-                for (Account objAccount : listUpdate) {
-                    try {
-                        update objAccount;
-                    } catch (Exception e) {
-                        objAccount.addError(Label.Update_Fail);
-                    }
-                }
+                mapAccountUpdate.put(objAccount.Id, objAccount);
             }
         }
     }

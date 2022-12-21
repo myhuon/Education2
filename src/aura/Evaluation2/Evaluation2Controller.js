@@ -26,7 +26,6 @@
 
                 helper.getInitData(component, event, helper);
 
-                //component.set("v.isAbleMoveRow", true);
                 component.set("v.isAbleClickAddProduct", true);
                 component.set("v.isAvailableDelete", false);
                 component.set("v.isClickedAddProduct", false);
@@ -39,11 +38,8 @@
             fnSelectRow: function(component, event){
                 console.log('[fnSelectRow] Start =============================>');
                 var idx = event.getSource().get("v.name");
-                console.log('[fnSelectRow] idx =============================>' + idx);
                 var value = event.getSource().get("v.checked");
-                console.log('[fnSelectRow] value =============================>' + value);
                 var data = component.get("v.listData");
-                console.log('[fnSelectRow] data =============================>' + data);
 
                 let listSelectedData = component.get("v.listSelectedData");
                 let isUnChecked = true;
@@ -114,7 +110,6 @@
                 var data = component.get("v.listData");
                 var listDeleteTargetId = component.get("v.listDeleteTargetId");
 
-                console.log('[fnDeleteRow] listSelectedData 1111=============================> ' + JSON.stringify(listSelectedData));
                 for(var row of listSelectedData){
                     if(row.Id) {
                         listDeleteTargetId.push(row.Id);
@@ -126,8 +121,6 @@
 
                 component.set("v.listData", data);
                 component.set("v.listSelectedData", []);
-                console.log('[fnDeleteRow] listData =============================>' + data);
-
                 component.set("v.isAvailableDelete", false);
                 console.log('[fnDeleteRow] End =============================>');
             },
@@ -149,9 +142,8 @@
             fnHandleSelected: function(component, event, helper) {
                 console.log('[fnHandleSelected] Start =============================>');
                 var uniqueLookupIdentifier = event.getParam("uniqueLookupIdentifier").split('-');
-                console.log('[fnHandleSelected] uniqueLookupIdentifier', uniqueLookupIdentifier);
                 var productId = event.getParam("selectedId");
-                console.log('[fnHandleSelected] selectedId', productId);
+
                 if(productId.length > 0) {
                     var type = uniqueLookupIdentifier[0];
                     var idx = parseInt(uniqueLookupIdentifier[1],10);
@@ -182,7 +174,6 @@
                 console.log('[fnSave] Start =============================>');
 
                 var data = component.get("v.mapUpdate");
-                console.log('[fnSave] mapUpdate : ' + JSON.stringify(data));
                 helper.doSave(component, event, helper, data);
 
                 console.log('[fnSave] End =============================>');
@@ -197,7 +188,6 @@
             fnMoveRow : function(component, event, helper){
                 var idx = event.getSource().get("v.value");
                 var moveDirection = event.getSource().get("v.class");
-                var listData = component.get("v.listData");
                 var isUp = true;
 
                 if(moveDirection != 'moveUp') isUp = false;

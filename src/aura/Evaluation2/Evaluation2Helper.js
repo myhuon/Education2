@@ -137,8 +137,7 @@
                 let ListData = component.get("v.listData");
                 let objData = ListData[idx];
                 let recordId = component.get("v.recordId");
-
-                var mapUpdate = component.get("v.mapUpdate");
+                let mapUpdate = component.get("v.mapUpdate");
 
                 var action = component.get("c.doChangeValue");
                 action.setParams({
@@ -157,7 +156,6 @@
                         if(result != null){
                             component.set("v.mapUpdate", result);
                             component.set("v.isAbleClickSave", true);
-                            console.log('******** listData : ' + JSON.stringify(ListData));
                         }
                     } else if (state === "ERROR") {
                         var errors = response.getError();
@@ -178,11 +176,7 @@
                 component.set("v.toggleSpinner", true);
 
                 let listData = component.get("v.listData");
-                console.log('[doMoveRow] listData : ' + JSON.stringify(listData));
                 let mapUpdate = component.get("v.mapUpdate");
-                console.log('[doMoveRow] mapUpdate : ' + JSON.stringify(mapUpdate));
-                let objData = listData[idx];
-                console.log('[doMoveRow] objData : ' + JSON.stringify(objData));
 
                 var action = component.get("c.doMoveRow");
                 action.setParams({

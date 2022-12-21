@@ -19,17 +19,6 @@ public with sharing class Evaluation2Controller {
                 ORDER BY SortOrder
         ];
 
-        Integer seq = 0;
-        for (OpportunityLineItem obj : listOpportunityLineItems) {
-            if (obj.SortOrder == null) {
-                obj.SortOrder = seq;
-            }
-            seq += 1;
-
-            System.debug('Sortorder : ' + obj.SortOrder);
-        }
-        //System.debug('sortorder : ' + listOpportunityLineItems[0].SortOrder);
-
         return listOpportunityLineItems;
     }
 
@@ -55,18 +44,34 @@ public with sharing class Evaluation2Controller {
 
     @AuraEnabled
     public static boolean saveRecord(Map<Integer, OpportunityLineItem> draftValues) {
-        Set<Integer> setSortOrderNum = new Set<Integer>();
-        List<OpportunityLineItem> listTemp = new List<OpportunityLineItem>();
 
         for (OpportunityLineItem objItem : draftValues.values()) {
+            System.debug('[saveRecord] objItem.SortOrder : ' + objItem.SortOrder);
             System.debug('[saveRecord] objItem : ' + objItem);
-
             if (objItem.Quantity == null || objItem.UnitPrice == null || objItem.Product2Id == null) {
                 return false;
             }
         }
 
-        List<Database.upsertResult> results = Database.upsert(draftValues.values(), true);
+        //List<Database.upsertResult> results = Database.upsert(draftValues.values(), false);
+//        upsert draftValues.values() Id;
+
+        List<OpportunityLineItem> listTemp = new List<OpportunityLineItem>();
+        for(OpportunityLineItem obj:draftValues.values()) {
+            OpportunityLineItem objUnit = new OpportunitylineItem();
+            if(obj.Id == null) {
+                objUnit.OpportunityId = obj.OpportunityId;
+                objUnit.Product2Id = obj.Product2Id;
+            }
+            objUnit.Id = obj.Id;
+            objUnit.SortOrder = obj.SortOrder;
+            objUnit.UnitPrice = obj.UnitPrice;
+            objUnit.Description = obj.Description;
+            objUnit.TotalPrice = obj.TotalPrice;
+            objUnit.Quantity = obj.Quantity;
+            listTemp.add(objUnit);
+        }
+        upsert listTemp;
         return true;
     }
 
@@ -104,34 +109,32 @@ public with sharing class Evaluation2Controller {
 
     @AuraEnabled
     public static Map<Integer, OpportunityLineItem> doMoveRow(Map<Integer, OpportunityLineItem> mapUpdate, List<OpportunityLineItem> listData, Integer idx, Boolean isUp) {
-        if (mapUpdate == null) mapUpdate = new Map<Integer, OpportunityLineItem>();
-
         System.debug('[doMoveRow] ====================> start! ');
+        if (mapUpdate == null) mapUpdate = new Map<Integer, OpportunityLineItem>();
         OpportunityLineItem objMove = new OpportunityLineItem();
-        OpportunityLineItem obj = listData[idx];
+        OpportunityLineItem obj = new OpportunityLineItem();
+        Integer objIdx = 0;
 
-
+        obj = mapUpdate.get(idx) == null ? listData[idx] : mapUpdate.get(idx);
         if (isUp) {
-            System.debug('[doMoveRow] ====================> isUp ');
-            objMove = listData[idx - 1];
+            objIdx = idx - 1;
+            objMove = mapUpdate.get(objIdx) == null ? listData[objIdx] : mapUpdate.get(objIdx);
 
             obj.SortOrder -= 1;
             objMove.SortOrder += 1;
-
-            mapUpdate.put(idx - 1, obj);
-            mapUpdate.put(idx, objMove);
         } else {
-            System.debug('[doMoveRow] ====================> isDown ');
-            objMove = listData[idx + 1];
+            objIdx = idx + 1;
+            objMove = mapUpdate.get(objIdx) == null ? listData[objIdx] : mapUpdate.get(objIdx);
 
             obj.SortOrder += 1;
             objMove.SortOrder -= 1;
-
-            mapUpdate.put(idx + 1, obj);
-            mapUpdate.put(idx, objMove);
         }
 
-        System.debug('mapUpdate : ' + mapUpdate);
+        mapUpdate.put(objIdx, obj);
+        mapUpdate.put(idx, objMove);
+
+        System.debug('[doMoveRow] sortOrder : ' + obj.SortOrder + ' / ' + objMove.SortOrder);
+
         System.debug('[doMoveRow] ====================> end! ');
         return mapUpdate;
     }

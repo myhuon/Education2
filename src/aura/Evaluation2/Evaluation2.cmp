@@ -62,8 +62,8 @@
     <aura:attribute name="isAbleClickAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleClickSave" type="Boolean" default="false"/>
     <aura:attribute name="isDisableButton" type="Boolean" default="false"/>
-<!--    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>-->
+    <!--    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
+        <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>-->
     <aura:attribute name="isClickedAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleMoveRow" type="Boolean" default="true"/>
 
@@ -216,14 +216,14 @@
                                                                  value="{!obj.UnitPrice}" variant="label-hidden"
                                                                  class="{!'ItemList-Price-' + idx}"
                                                                  onchange="{!c.fnChangeValue}"
-                                                                 disabled="{!obj.selectProduct}" />
+                                                                 disabled="{!obj.selectProduct}"/>
                                             </td>
                                             <td class="" title="Quantity">
                                                 <lightning:input type="number" value="{!obj.Quantity}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Amount-' + idx}"
                                                                  onchange="{!c.fnChangeValue}"
-                                                                 disabled="{!obj.selectProduct}" />
+                                                                 disabled="{!obj.selectProduct}"/>
                                             </td>
                                             <td class="" title="TotalAmount">
                                                 <lightning:input formatter="currency" type="number"
@@ -235,21 +235,20 @@
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Description-' + idx}"
                                                                  onchange="{!c.fnChangeValue}"
-                                                                 disabled="{!obj.selectProduct}" />
+                                                                 disabled="{!obj.selectProduct}"/>
                                             </td>
-                                            <!--<aura:if isTrue="{!not(v.isAbleClickSave) &amp;&amp; not(v.isClickedAddProduct)}">-->
-                                                <td class="" title="MoveSeq">
-                                                    <aura:if isTrue="{!idx != 0}">
-                                                        <lightning:button label="▲" class="moveUp" value="{!idx}" onclick="{!c.fnMoveRow}"
-                                                                          disabled="{!v.isClickedAddProduct}" />
-                                                    </aura:if>
-                                                    <aura:if isTrue="{!idx != v.listData.length - 1}">
-                                                        <lightning:button label="▼" class="moveDown" value="{!idx}" onclick="{!c.fnMoveRow}"
-                                                                          disabled="{!v.isClickedAddProduct}" />
-                                                    </aura:if>
-                                                </td>
-                                            <!--</aura:if>-->
-
+                                            <td class="" title="MoveSeq">
+                                                <aura:if isTrue="{!idx != 0}">
+                                                    <lightning:button label="▲" class="moveUp" value="{!idx}"
+                                                                      onclick="{!c.fnMoveRow}"
+                                                                      disabled="{!v.isClickedAddProduct}"/>
+                                                </aura:if>
+                                                <aura:if isTrue="{!idx != v.listData.length - 1}">
+                                                    <lightning:button label="▼" class="moveDown" value="{!idx}"
+                                                                      onclick="{!c.fnMoveRow}"
+                                                                      disabled="{!v.isClickedAddProduct}"/>
+                                                </aura:if>
+                                            </td>
                                         </tr>
                                     </aura:iteration>
                                     <aura:set attribute="else">

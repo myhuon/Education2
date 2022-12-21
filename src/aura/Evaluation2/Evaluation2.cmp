@@ -62,9 +62,10 @@
     <aura:attribute name="isAbleClickAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleClickSave" type="Boolean" default="false"/>
     <aura:attribute name="isDisableButton" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>
+<!--    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
+    <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>-->
     <aura:attribute name="isClickedAddProduct" type="Boolean" default="false"/>
+    <aura:attribute name="isAbleMoveRow" type="Boolean" default="true"/>
 
     <!-- Validation 용도 -->
     <aura:attribute name="IsEmpty" type="Boolean" default="false"/>
@@ -140,12 +141,13 @@
                                 <colgroup>
                                     <col width="5%"/>
                                     <col width="5%"/>
-                                    <col width="15%"/>      <!--Product-->
+                                    <col width="10%"/>      <!--Product-->
                                     <col width="15%"/>       <!--ListPrice-->
                                     <col width="15%"/>      <!--UnitPrice-->
                                     <col width="10%"/>      <!--Quantity-->
                                     <col width="15%"/>       <!--TotalPrice-->
-                                    <col width="20%"/>       <!--Description%-->
+                                    <col width="15%"/>       <!--Description-->
+                                    <col width="10%"/>       <!--Description%-->
                                 </colgroup>
                                 <thead>
                                 <tr class="slds-line-height_reset">
@@ -238,11 +240,11 @@
                                             <!--<aura:if isTrue="{!not(v.isAbleClickSave) &amp;&amp; not(v.isClickedAddProduct)}">-->
                                                 <td class="" title="MoveSeq">
                                                     <aura:if isTrue="{!idx != 0}">
-                                                        <lightning:button label="▲" value="{!idx}" onclick="{!c.fnMoveUp}"
+                                                        <lightning:button label="▲" class="moveUp" value="{!idx}" onclick="{!c.fnMoveRow}"
                                                                           disabled="{!v.isClickedAddProduct}" />
                                                     </aura:if>
                                                     <aura:if isTrue="{!idx != v.listData.length - 1}">
-                                                        <lightning:button label="▼" value="{!idx}" onclick="{!c.fnMoveDown}"
+                                                        <lightning:button label="▼" class="moveDown" value="{!idx}" onclick="{!c.fnMoveRow}"
                                                                           disabled="{!v.isClickedAddProduct}" />
                                                     </aura:if>
                                                 </td>

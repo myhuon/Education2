@@ -52,7 +52,7 @@
                         }
                     } else if (state === "ERROR") {
                         var errors = response.getError();
-                        if (errors) {
+                        if (errors.size > 0) {
                             if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
                         } else {
                             this.showToast("error", "Unknown error");
@@ -87,11 +87,12 @@
                     } else if (state === "ERROR") {
                         var errors = response.getError();
                         console.log('[doSave] error : ' + errors[0].message);
-                        if (errors) {
-                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                        if (errors.size > 0) {
+                            this.showToast("error", errors[0].message);
                         } else {
                             this.showToast("error", "Unknown error");
                         }
+                        $A.get('e.force:refreshView').fire();
                     }
                 });
                 component.set("v.toggleSpinner", false);
@@ -117,7 +118,7 @@
                         $A.get('e.force:refreshView').fire();
                     } else if (state === "ERROR") {
                         var errors = response.getError();
-                        if (errors) {
+                        if (errors.size > 0) {
                             if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
                         } else {
                             this.showToast("error", "Unknown error");
@@ -156,10 +157,11 @@
                         if(result != null){
                             component.set("v.mapUpdate", result);
                             component.set("v.isAbleClickSave", true);
+                            console.log('******** listData : ' + JSON.stringify(ListData));
                         }
                     } else if (state === "ERROR") {
                         var errors = response.getError();
-                        if (errors) {
+                        if (errors.size > 0) {
                             if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
                         } else {
                             this.showToast("error", "Unknown error");
@@ -171,58 +173,16 @@
                 console.log('[changeValue] End ==============================>');
             },
 
-            addRowChagneValue : function (component, event, helper, type, idx, targetValue) {
-                console.log('[addRowChagneValue] Start ==============================>');
-                component.set("v.toggleSpinner", true);
-
-                let ListData = component.get("v.listData");
-                let objData = ListData[idx];
-                let recordId = component.get("v.recordId");
-
-                var listUpdate = component.get("v.listUpdate");
-
-                var action = component.get("c.doAddRowChangeValue");
-                action.setParams({
-                    productId: ListData[idx].Product2Id,
-                    recordId: recordId,
-                    itemId : objData.Id,
-                    type : type,
-                    targetValue : targetValue,
-                    mapUpdate : mapUpdate,
-                    idx : idx
-                });
-                action.setCallback(this, function (response) {
-                    var state = response.getState();
-                    if (state === "SUCCESS") {
-                        var result = response.getReturnValue();
-                        if(result != null){
-                            component.set("v.mapUpdate", result);
-                            component.set("v.isAbleClickSave", true);
-                        }
-                    } else if (state === "ERROR") {
-                        var errors = response.getError();
-                        if (errors) {
-                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
-                        } else {
-                            this.showToast("error", "Unknown error");
-                        }
-                    }
-                });
-                component.set("v.toggleSpinner", false);
-                $A.enqueueAction(action);
-                console.log('[addRowChagneValue] End ==============================>');
-            },
-
             moveRow : function (component, event, helper, idx, isUp) {
                 console.log('[doMoveRow] Start ==============================>');
                 component.set("v.toggleSpinner", true);
 
                 let listData = component.get("v.listData");
-                console.log('[doMoveRow] listData : ' + listData);
+                console.log('[doMoveRow] listData : ' + JSON.stringify(listData));
                 let mapUpdate = component.get("v.mapUpdate");
-                console.log('[doMoveRow] mapUpdate : ' + mapUpdate);
+                console.log('[doMoveRow] mapUpdate : ' + JSON.stringify(mapUpdate));
                 let objData = listData[idx];
-                console.log('[doMoveRow] objData : ' + objData);
+                console.log('[doMoveRow] objData : ' + JSON.stringify(objData));
 
                 var action = component.get("c.doMoveRow");
                 action.setParams({
@@ -237,16 +197,21 @@
                         var result = response.getReturnValue();
                         console.log('[doMoveRow] result ==============================>' + JSON.stringify(result));
                         if(result != null){
+                            var moveIdx = idx + 1;
+                            if(isUp) moveIdx = idx - 1;
+
+                            // 화면 레코드 순서 변경
                             var listTemp = listData[idx];
-                            listData[idx] = listData[idx - 1];
-                            listData[idx - 1] = listTemp;
+                            listData[idx] = listData[moveIdx];
+                            listData[moveIdx] = listTemp;
+
                             component.set("v.listData", listData);
                             component.set("v.mapUpdate", result);
                             component.set("v.isAbleClickSave", true);
                         }
                     } else if (state === "ERROR") {
                         var errors = response.getError();
-                        if (errors) {
+                        if (errors.size > 0) {
                             if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
                         } else {
                             this.showToast("error", "Unknown error");

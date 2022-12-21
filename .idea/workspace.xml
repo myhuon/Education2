@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="[Evaluation2] Done&#10;1. record delete&#10;2. record add">
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="순서 조정, KEY 값 수정 필요">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/DN_LookupController.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/DN_LookupController.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +69,7 @@
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1671590282000" />
                       <entry key="APEXCLASS:EVALUATION1" value="1671087909563" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1671065190566" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671589729607" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671605278037" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671422531701" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
                       <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
@@ -82,7 +81,7 @@
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPSELECTED_EVT" value="1670823256000" />
                       <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670823277396" />
                       <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822830285" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671597958000" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671604172960" />
                       <entry key="AURADEFINITIONBUNDLE:EVALUATION2_1" value="1670818826516" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                       <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
@@ -383,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671439075446</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="순서 조정, KEY 값 수정 필요">
+      <created>1671598019027</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1671598019027</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -413,7 +419,8 @@
     <MESSAGE value="레코드 추가 안됨..." />
     <MESSAGE value="Opportunity_tr.cls 코드 보완" />
     <MESSAGE value="[Evaluation2] Done&#10;1. record delete&#10;2. record add" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Evaluation2] Done&#10;1. record delete&#10;2. record add" />
+    <MESSAGE value="순서 조정, KEY 값 수정 필요" />
+    <option name="LAST_COMMIT_MESSAGE" value="순서 조정, KEY 값 수정 필요" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671422147047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />

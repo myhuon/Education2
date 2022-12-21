@@ -26,6 +26,7 @@
 
                 helper.getInitData(component, event, helper);
 
+                //component.set("v.isAbleMoveRow", true);
                 component.set("v.isAbleClickAddProduct", true);
                 component.set("v.isAvailableDelete", false);
                 component.set("v.isClickedAddProduct", false);
@@ -138,13 +139,8 @@
                 var type = target[1];
                 var idx = parseInt(target[2],10);
 
-                let listUpdate = component.get("v.listUpdate");
+                helper.changeValue(component, event, helper, type, idx, targetValue);
 
-                if(listUpdate[idx] != null) {
-                    helper.addRowChagneValue(component, event, helper, type, idx, targetValue);
-                } else {
-                    helper.changeValue(component, event, helper, type, idx, targetValue);
-                }
 
                 console.log('[fnChangeValue] End =============================>');
             },
@@ -160,8 +156,7 @@
                     var type = uniqueLookupIdentifier[0];
                     var idx = parseInt(uniqueLookupIdentifier[1],10);
 
-                    //helper.changeValue(component, event, helper, type, idx, productId);
-                    helper.addRowChagneValue(component, event, helper, type, idx, productId);
+                    helper.changeValue(component, event, helper, type, idx, productId);
 
                     var data = component.get("v.listData");
                     data[idx].selectProduct = false;
@@ -197,70 +192,16 @@
                 component.set("v.toggleSpinner", true);
                 $A.get('e.force:refreshView').fire();
                 component.set("v.toggleSpinner", false);
-                /*component.set("v.isAvailableDelete", false);
-                component.set("v.isClickedAddProduct", false);
-                component.set("v.isAbleClickSave", false);*/
             },
 
-            /*fnMouseOver : function(component, event, helper){
-                component.set('v.mouseOver', true);
-            },
-
-            fnMouseOut : function(component, event, helper){
-                component.set('v.mouseOver', false);
-            },*/
-
-            fnMoveUp : function(component, event, helper){
+            fnMoveRow : function(component, event, helper){
                 var idx = event.getSource().get("v.value");
+                var moveDirection = event.getSource().get("v.class");
                 var listData = component.get("v.listData");
-                /*var mapUpdate = component.get("v.mapUpdate");*/
                 var isUp = true;
 
-                console.log("[fnMoveUp] idx : " + idx);
-/*                mapUpdate[index].sortOrder -= 1;
-                mapUpdate[index - 1].sortOrder += 1;
-                component.set("v.mapUpdate", mapUpdate);*/
-
-                /*listData[index].sortOrder -= 1;
-                listData[index - 1].sortOrder += 1;
-                component.set("v.listData", listData);*/
-
-                // 화면에서 row ▲ 누름과 동시에 움직이기 위해서 switch (실제 레코드 sortOrder는 저장 버튼 클릭 시 변경됨)
+                if(moveDirection != 'moveUp') isUp = false;
 
                 helper.moveRow(component, event, helper, idx, isUp);
-
-
-
-                // 저장 버튼 클릭 시 실제 데이터 switch
-               /* var mapTemp = mapUpdate[index];
-
-                if(mapUpdate[index-1] != null) {
-                    mapUpdate[index] = mapUpdate[index - 1];
-                } else {
-                    mapUpdate[index] = listData[index];
-                }
-
-                if(mapTemp != null) {
-                    mapUpdate[index - 1] = mapTemp;
-                } else {
-                    mapUpdate[index - 1] = listData[index - 1];
-                }
-
-                console.log('[fnMoveUp] mapUpdate : ' + JSON.stringify(mapUpdate));
-                component.set("v.mapUpdate", mapUpdate);
-                component.set("v.isAbleClickSave", true);*/
             },
-
-            fnMoveDown : function(component, event, helper){
-                var index = event.getSource().get("v.value");
-                var listData = component.get("v.listData");
-
-                // value switch
-                var temp = listData[index];
-                listData[index] = listData[index + 1];
-                listData[index + 1] = temp;
-
-                component.set("v.listData", listData);
-                component.set("v.isAbleClickSave", true);
-            }
 });

@@ -23,9 +23,9 @@
             showToast: function (type, message) {
                 var evt = $A.get("e.force:showToast");
                 evt.setParams({
-                    key: "info_alt"
-                    , type: type
-                    , message: message
+                    key: "info_alt",
+                    type: type,
+                    message: message
                 });
                 evt.fire();
             },
@@ -67,40 +67,33 @@
                 console.log('[doSave] Start ==============================>');
                 component.set("v.toggleSpinner", true);
 
-                var listData = component.get("v.listData");
-                var mapUpdate = component.get("v.mapUpdate");
-
-                if(component.get("v.isRequiredFieldEmpty")) {
-                    this.showToast("error", $A.get("$Label.c.isEmptyRequiredField"));
-                } else {
-                    var action = component.get("c.saveRecord");
-                    action.setParams({
-                        draftValues : draftValues
-                    });
-
-                    action.setCallback(this, function (response) {
-                        var state = response.getState();
-                        if (state === "SUCCESS") {
-                            var result = response.getReturnValue();
-                            console.log('[doSave] result : ' + result);
-                            if(result) {
-                                component.set("v.mapUpdate", {});
-                                helper.showToast("success", "Save Success!");
-                                console.log('[doSave] SUCCESS!!! ==============================>');
-                                $A.get('e.force:refreshView').fire();
-                            } else {
-                                this.showToast("error", $A.get("$Label.c.Update_Fail"));
-                            }
-                        } else if (state === "ERROR") {
-                            var errors = response.getError();
-                            if (errors) {
-                                if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
-                            } else {
-                                this.showToast("error", "Unknown error");
-                            }
+                var action = component.get("c.saveRecord");
+                action.setParams({
+                    draftValues : draftValues
+                });
+                action.setCallback(this, function (response) {
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                        var result = response.getReturnValue();
+                        console.log('[doSave] result : ' + result);
+                        if(result) {
+                            component.set("v.mapUpdate", {});
+                            helper.showToast("success", "Save Success!");
+                            console.log('[doSave] SUCCESS!!! ==============================>');
+                            $A.get('e.force:refreshView').fire();
+                        } else {
+                            this.showToast("error", $A.get("$Label.c.isEmptyRequiredField"));
                         }
-                    });
-                }
+                    } else if (state === "ERROR") {
+                        var errors = response.getError();
+                        console.log('[doSave] error : ' + errors[0].message);
+                        if (errors) {
+                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                        } else {
+                            this.showToast("error", "Unknown error");
+                        }
+                    }
+                });
                 component.set("v.toggleSpinner", false);
                 $A.enqueueAction(action);
                 console.log('[doSave] End ==============================>');
@@ -143,46 +136,125 @@
                 let ListData = component.get("v.listData");
                 let objData = ListData[idx];
                 let recordId = component.get("v.recordId");
-                var listUpdate = component.get("v.listUpdate");
+
                 var mapUpdate = component.get("v.mapUpdate");
 
-                if((type == 'Amount' || type == 'Price') && $A.util.isEmpty(targetValue)){
-                    component.set("v.isRequiredFieldEmpty", true);
-                } else {
-                    component.set("v.isRequiredFieldEmpty", false);
-                    component.set("v.listData", ListData);
-
-                    var action = component.get("c.doChangeValue");
-                    action.setParams({
-                        productId: ListData[idx].Product2Id,
-                        recordId: recordId,
-                        itemId : objData.Id,
-                        type : type,
-                        targetValue : targetValue,
-                        mapUpdate : mapUpdate,
-                        idx : idx
-                    });
-                    action.setCallback(this, function (response) {
-                        var state = response.getState();
-                        if (state === "SUCCESS") {
-                            var result = response.getReturnValue();
-                            if(result != null){
-                                component.set("v.mapUpdate", result);
-                            }
-                        } else if (state === "ERROR") {
-                            var errors = response.getError();
-                            if (errors) {
-                                if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
-                            } else {
-                                 this.showToast("error", "Unknown error");
-                            }
+                var action = component.get("c.doChangeValue");
+                action.setParams({
+                    productId: ListData[idx].Product2Id,
+                    recordId: recordId,
+                    itemId : objData.Id,
+                    type : type,
+                    targetValue : targetValue,
+                    mapUpdate : mapUpdate,
+                    idx : idx
+                });
+                action.setCallback(this, function (response) {
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                        var result = response.getReturnValue();
+                        if(result != null){
+                            component.set("v.mapUpdate", result);
+                            component.set("v.isAbleClickSave", true);
                         }
-                            component.set("v.toggleSpinner", false);
-                    });
-                    $A.enqueueAction(action);
-                }
+                    } else if (state === "ERROR") {
+                        var errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                        } else {
+                            this.showToast("error", "Unknown error");
+                        }
+                    }
+                });
                 component.set("v.toggleSpinner", false);
+                $A.enqueueAction(action);
                 console.log('[changeValue] End ==============================>');
             },
 
+            addRowChagneValue : function (component, event, helper, type, idx, targetValue) {
+                console.log('[addRowChagneValue] Start ==============================>');
+                component.set("v.toggleSpinner", true);
+
+                let ListData = component.get("v.listData");
+                let objData = ListData[idx];
+                let recordId = component.get("v.recordId");
+
+                var listUpdate = component.get("v.listUpdate");
+
+                var action = component.get("c.doAddRowChangeValue");
+                action.setParams({
+                    productId: ListData[idx].Product2Id,
+                    recordId: recordId,
+                    itemId : objData.Id,
+                    type : type,
+                    targetValue : targetValue,
+                    mapUpdate : mapUpdate,
+                    idx : idx
+                });
+                action.setCallback(this, function (response) {
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                        var result = response.getReturnValue();
+                        if(result != null){
+                            component.set("v.mapUpdate", result);
+                            component.set("v.isAbleClickSave", true);
+                        }
+                    } else if (state === "ERROR") {
+                        var errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                        } else {
+                            this.showToast("error", "Unknown error");
+                        }
+                    }
+                });
+                component.set("v.toggleSpinner", false);
+                $A.enqueueAction(action);
+                console.log('[addRowChagneValue] End ==============================>');
+            },
+
+            moveRow : function (component, event, helper, idx, isUp) {
+                console.log('[doMoveRow] Start ==============================>');
+                component.set("v.toggleSpinner", true);
+
+                let listData = component.get("v.listData");
+                console.log('[doMoveRow] listData : ' + listData);
+                let mapUpdate = component.get("v.mapUpdate");
+                console.log('[doMoveRow] mapUpdate : ' + mapUpdate);
+                let objData = listData[idx];
+                console.log('[doMoveRow] objData : ' + objData);
+
+                var action = component.get("c.doMoveRow");
+                action.setParams({
+                    mapUpdate : mapUpdate,
+                    listData : listData,
+                    idx : idx,
+                    isUp : isUp
+                });
+                action.setCallback(this, function (response) {
+                    var state = response.getState();
+                    if (state === "SUCCESS") {
+                        var result = response.getReturnValue();
+                        console.log('[doMoveRow] result ==============================>' + JSON.stringify(result));
+                        if(result != null){
+                            var listTemp = listData[idx];
+                            listData[idx] = listData[idx - 1];
+                            listData[idx - 1] = listTemp;
+                            component.set("v.listData", listData);
+                            component.set("v.mapUpdate", result);
+                            component.set("v.isAbleClickSave", true);
+                        }
+                    } else if (state === "ERROR") {
+                        var errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) this.showToast("error", errors[0].message);
+                        } else {
+                            this.showToast("error", "Unknown error");
+                        }
+                    }
+                });
+                component.set("v.toggleSpinner", false);
+                $A.enqueueAction(action);
+                console.log('[doMoveRow] End ==============================>');
+            },
 });

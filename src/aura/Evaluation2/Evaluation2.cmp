@@ -59,21 +59,18 @@
     <aura:attribute name="isAvailableAddShipping" type="Boolean" default="false"/>
 
     <!-- Grid 화면에서 수정/삭제 불가 실질적 Setting 값-->
-    <aura:attribute name="isAbleEditQuantity" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleEditUnitPrice" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleEditDiscount" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleEditRemark" type="Boolean" default="false"/>
     <aura:attribute name="isAbleClickAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleClickSave" type="Boolean" default="false"/>
-    <aura:attribute name="isAbleClickAddShipping" type="Boolean" default="false"/>
     <aura:attribute name="isDisableButton" type="Boolean" default="false"/>
+    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
+    <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>
+    <aura:attribute name="isClickedAddProduct" type="Boolean" default="false"/>
 
     <!-- Validation 용도 -->
     <aura:attribute name="IsEmpty" type="Boolean" default="false"/>
     <aura:attribute name="statusMsg" type="String" default="None"/>
     <aura:attribute name="lastUpdate" type="String"/>
     <aura:attribute name="toggleSpinner" type="Boolean" default="false"/>
-    <aura:attribute name="isRequiredFieldEmpty" type="Boolean" default="false"/>
 
     <!-- Button Add Row
     <div style="text-align:right; margin:5px">
@@ -115,12 +112,15 @@
                                 <lightning:buttonGroup class="slds-float_right">
                                     <lightning:button label="{!$Label.c.Add_Products}" onclick="{!c.fnAddRow}"
                                                       variant="{!if(v.listData.length == 0, 'brand', 'neutral')}"
-                                                      disabled="{!if(v.isAbleClickAddProduct == false, true, false)}"/>
+                                                      disabled="{!not(v.isAbleClickAddProduct)}"/>
                                     <lightning:button label="{!$Label.c.Delete}" onclick="{!c.fnDeleteRow}"
+                                                      variant="destructive-text"
                                                       name="{!v.dataIdx}" disabled="{!not(v.isAvailableDelete)}"/>
+                                    <lightning:button label="{!$Label.c.Cancel}" onclick="{!c.fnCancel}"
+                                                      disabled="{!if(v.listData.length == 0, true, false)}"/>
                                     <lightning:button label="{!$Label.c.Save}" onclick="{!c.fnSave}" type="submit"
                                                       variant="brand"
-                                                      disabled="{!if(v.listData.length == 0, true, false)}"/>
+                                                      disabled="{!not(v.isAbleClickSave)}"/>
                                 </lightning:buttonGroup>
                             </aura:if>
                         </div>
@@ -137,18 +137,16 @@
                             <!-- slds-table_fixed-layout 쓰면 DN_Lookup에서 Layout 깨짐-->
                             <table aria-multiselectable="false" role="grid"
                                    class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
-                                <aura:if isTrue="{!if(v.objRecordType == 'LRPOrder', false, true)}">
-                                    <colgroup>
-                                        <col width="5%"/>
-                                        <col width="5%"/>
-                                        <col width="15%"/>      <!--Product-->
-                                        <col width="15%"/>       <!--ListPrice-->
-                                        <col width="15%"/>      <!--UnitPrice-->
-                                        <col width="10%"/>      <!--Quantity-->
-                                        <col width="15%"/>       <!--TotalPrice-->
-                                        <col width="20%"/>       <!--Description%-->
-                                    </colgroup>
-                                </aura:if>
+                                <colgroup>
+                                    <col width="5%"/>
+                                    <col width="5%"/>
+                                    <col width="15%"/>      <!--Product-->
+                                    <col width="15%"/>       <!--ListPrice-->
+                                    <col width="15%"/>      <!--UnitPrice-->
+                                    <col width="10%"/>      <!--Quantity-->
+                                    <col width="15%"/>       <!--TotalPrice-->
+                                    <col width="20%"/>       <!--Description%-->
+                                </colgroup>
                                 <thead>
                                 <tr class="slds-line-height_reset">
                                     <th></th>
@@ -184,7 +182,7 @@
                                     <aura:iteration items="{!v.listData}" var="obj" indexVar="idx">
                                         <tr aria-selected="false" class="slds-hint-parent">
                                             <td class="" title="Seq" style="text-align:center">
-                                                <p>{!idx+1}</p>
+                                                <p>{!idx + 1}</p>
                                             </td>
                                             <td class="slds-text-align_center" role="gridcell">
                                                 <lightning:input type="checkbox" checked="{!obj.checked}" name="{!idx}"
@@ -196,7 +194,7 @@
                                                              objectName="Product2"
                                                              fieldSet="['Name']"
                                                              limit="10000"
-                                                             comparisonField="['Name','Product2Id']"
+                                                             comparisonField="['Name']"
                                                              primaryDisplayField="Name"
                                                              minimumCharacter="2"
                                                              lightningIconName="standard:product"
@@ -207,8 +205,6 @@
                                                 />
                                             </td>
                                             <td class="td-listPrice" title="=ListPrice">
-                                                <!--<lightning:inputField fieldName="ListPrice__c" value="{!obj.ListPrice__c}" variant="label-hidden" disabled="true"/> -->
-                                                <!--<lightning:formattedNumber value="{!obj.ListPrice}" style="currency" currencyCode="{!v.objOrder.CurrencyIsoCode}"/>-->
                                                 <lightning:input formatter="currency" type="number"
                                                                  value="{!obj.ListPrice}" variant="label-hidden"
                                                                  disabled="true"/>
@@ -218,16 +214,16 @@
                                                                  value="{!obj.UnitPrice}" variant="label-hidden"
                                                                  class="{!'ItemList-Price-' + idx}"
                                                                  onchange="{!c.fnChangeValue}"
-                                                />
+                                                                 disabled="{!obj.selectProduct}" />
                                             </td>
                                             <td class="" title="Quantity">
                                                 <lightning:input type="number" value="{!obj.Quantity}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Amount-' + idx}"
-                                                                 onchange="{!c.fnChangeValue}" />
+                                                                 onchange="{!c.fnChangeValue}"
+                                                                 disabled="{!obj.selectProduct}" />
                                             </td>
                                             <td class="" title="TotalAmount">
-                                                <!--<lightning:inputField fieldName="TotalPrice__c" value="{!obj.TotalPrice__c}" variant="label-hidden" disabled="true"/>-->
                                                 <lightning:input formatter="currency" type="number"
                                                                  value="{!obj.TotalPrice}" variant="label-hidden"
                                                                  disabled="true"/>
@@ -236,8 +232,22 @@
                                                 <lightning:input type="text" value="{!obj.Description}"
                                                                  variant="label-hidden"
                                                                  class="{!'ItemList-Description-' + idx}"
-                                                                 onchange="{!c.fnChangeValue}" />
+                                                                 onchange="{!c.fnChangeValue}"
+                                                                 disabled="{!obj.selectProduct}" />
                                             </td>
+                                            <!--<aura:if isTrue="{!not(v.isAbleClickSave) &amp;&amp; not(v.isClickedAddProduct)}">-->
+                                                <td class="" title="MoveSeq">
+                                                    <aura:if isTrue="{!idx != 0}">
+                                                        <lightning:button label="▲" value="{!idx}" onclick="{!c.fnMoveUp}"
+                                                                          disabled="{!v.isClickedAddProduct}" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!idx != v.listData.length - 1}">
+                                                        <lightning:button label="▼" value="{!idx}" onclick="{!c.fnMoveDown}"
+                                                                          disabled="{!v.isClickedAddProduct}" />
+                                                    </aura:if>
+                                                </td>
+                                            <!--</aura:if>-->
+
                                         </tr>
                                     </aura:iteration>
                                     <aura:set attribute="else">

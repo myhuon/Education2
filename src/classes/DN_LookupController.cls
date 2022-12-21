@@ -1,5 +1,13 @@
 /**
- * Created by 천유정 on 2022-08-17.
+ * @description       :
+ *
+ * @author            : hyunsoo.song@daeunextier.com
+ * @group             :
+ * @last modified on  : 2022-12-12
+ * @last modified by  : hyunsoo.song@daeunextier.com
+ * Modifications Log
+ * Ver     Date             Author               Modification
+ * 1.0   2022-12-12   hyunsoo.song@daeunextier.com   Initial Version
  */
 
 public with sharing class DN_LookupController {

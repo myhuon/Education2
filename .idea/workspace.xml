@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="Sort Order 조정 미완료">
-      <change afterPath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr.cls" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr.cls-meta.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/triggers/OpportunityLineItem.trigger" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/triggers/OpportunityLineItem.trigger-meta.xml" afterDir="false" />
+    <list default="true" id="eda936e3-c314-4934-bb06-6ebf03dac3cf" name="Changes" comment="Sort Order 완료">
+      <change afterPath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr_test.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr_test.cls-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2.cmp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aura/Evaluation2/Evaluation2Helper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/Evaluation2Controller.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/OpportunityLineItem_tr.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/TestUtils.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/TestUtils.cls" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +19,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="HTML File" />
         <option value="Lightning Design" />
         <option value="Lightning Application Event" />
@@ -29,6 +27,7 @@
         <option value="Lightning Helper" />
         <option value="Lightning Style" />
         <option value="Apex Trigger" />
+        <option value="Class" />
         <option value="Apex Class" />
         <option value="Apex Metadata" />
       </list>
@@ -64,6 +63,16 @@
         </option>
         <option name="connectionWorkspaceSettings">
           <map>
+            <entry key="Daeunextier SB">
+              <value>
+                <ConnectionWorkspaceSettings />
+              </value>
+            </entry>
+            <entry key="Education">
+              <value>
+                <ConnectionWorkspaceSettings />
+              </value>
+            </entry>
             <entry key="Education2">
               <value>
                 <ConnectionWorkspaceSettings>
@@ -73,11 +82,12 @@
                       <entry key="APEXCLASS:DN_LOOKUPCONTROLLER" value="1671590282000" />
                       <entry key="APEXCLASS:EVALUATION1" value="1671087909563" />
                       <entry key="APEXCLASS:EVALUATION1_TEST" value="1671065190566" />
-                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671613796274" />
-                      <entry key="APEXCLASS:OPPORTUNITYLINEITEM_TR" value="1671611021541" />
+                      <entry key="APEXCLASS:EVALUATION2CONTROLLER" value="1671684587967" />
+                      <entry key="APEXCLASS:OPPORTUNITYLINEITEM_TR" value="1671670967492" />
+                      <entry key="APEXCLASS:OPPORTUNITYLINEITEM_TR_TEST" value="1671623431324" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR" value="1671422531701" />
                       <entry key="APEXCLASS:OPPORTUNITY_TR_TEST" value="1671011129316" />
-                      <entry key="APEXCLASS:TESTUTILS" value="1671011129316" />
+                      <entry key="APEXCLASS:TESTUTILS" value="1671623139995" />
                       <entry key="APEXCLASS:TESTUTILS_TEST" value="1671011279000" />
                       <entry key="APEXTRIGGER:OPPORTUNITY" value="1670915594604" />
                       <entry key="APEXTRIGGER:OPPORTUNITYLINEITEM" value="1671606834442" />
@@ -87,13 +97,18 @@
                       <entry key="AURADEFINITIONBUNDLE:DN_LOOKUPSELECTED_EVT" value="1670823256000" />
                       <entry key="AURADEFINITIONBUNDLE:DN_PAGING" value="1670823277396" />
                       <entry key="AURADEFINITIONBUNDLE:DN_VIEWCOLUMN" value="1670822830285" />
-                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671606041282" />
+                      <entry key="AURADEFINITIONBUNDLE:EVALUATION2" value="1671672326509" />
                       <entry key="AURADEFINITIONBUNDLE:EVALUATION2_1" value="1670818826516" />
                       <entry key="AURADEFINITIONBUNDLE:LWCLOOKUPCUSTOMDATATABLETYPE" value="1670570987142" />
                       <entry key="AURADEFINITIONBUNDLE:ORDERITEMLIST" value="1670808039000" />
                     </map>
                   </option>
                 </ConnectionWorkspaceSettings>
+              </value>
+            </entry>
+            <entry key="New Connection">
+              <value>
+                <ConnectionWorkspaceSettings />
               </value>
             </entry>
             <entry key="Yanolja PS">
@@ -144,7 +159,7 @@
       <recent name="C:\Users\송현수\IntelliJ\Education2\src\Test" />
     </key>
   </component>
-  <component name="RunManager" selected="Apex Unit Tests.Opportunity_tr_test">
+  <component name="RunManager" selected="Apex Unit Tests.OpportunityLineItem_tr_test">
     <configuration name="Evaluation1_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="allTests" value="false" />
       <option name="allowRunningInParallel" value="false" />
@@ -161,6 +176,44 @@
             <value>
               <set>
                 <option value="Evaluation1_test" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="nbaLogLevel" value="INFO" />
+      <option name="profilingLogLevel" value="INFO" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="systemLogLevel" value="DEBUG" />
+      <option name="testClassToTestMethodNames">
+        <map />
+      </option>
+      <option name="testSuiteName" />
+      <option name="validationLogLevel" value="INFO" />
+      <option name="visualforceLogLevel" value="INFO" />
+      <option name="waveLogLevel" value="INFO" />
+      <option name="workflowLogLevel" value="INFO" />
+      <method v="2" />
+    </configuration>
+    <configuration name="OpportunityLineItem_tr_test" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allTests" value="false" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="apexLogLevel" value="DEBUG" />
+      <option name="calloutsLogLevel" value="INFO" />
+      <option name="connectionName" value="Education2" />
+      <option name="connectionType" value="MDAPI" />
+      <option name="contextConfiguration" value="true" />
+      <option name="databaseLogLevel" value="INFO" />
+      <option name="logLevelsInitialized" value="false" />
+      <option name="moduleToTestClassNames">
+        <map>
+          <entry key="Education2">
+            <value>
+              <set>
+                <option value="OpportunityLineItem_tr_test" />
               </set>
             </value>
           </entry>
@@ -261,6 +314,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Apex Unit Tests.OpportunityLineItem_tr_test" />
         <item itemvalue="Apex Unit Tests.Opportunity_tr_test" />
         <item itemvalue="Apex Unit Tests.Evaluation1_test" />
         <item itemvalue="Apex Unit Tests.TestUtils_test" />
@@ -402,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671605739228</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Sort Order 완료">
+      <created>1671613921006</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1671613921006</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -435,9 +496,10 @@
     <MESSAGE value="순서 조정, KEY 값 수정 필요" />
     <MESSAGE value="Sort Order 조정 안됨" />
     <MESSAGE value="Sort Order 조정 미완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sort Order 조정 미완료" />
+    <MESSAGE value="Sort Order 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sort Order 완료" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Education2$Opportunity_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671422147047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
+    <SUITE FILE_PATH="coverage/Education2$OpportunityLineItem_tr_test.ic2" NAME="Education2 Coverage Results" MODIFIED="1671623433596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Education2" CONNECTION_NAME="Education2" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>

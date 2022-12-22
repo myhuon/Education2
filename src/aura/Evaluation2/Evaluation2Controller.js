@@ -14,6 +14,7 @@
                 //Table Column 값을 Custom Label로 지정
                 component.set("v.toggleSpinner", true);
 
+                // Best : 필드 라벨 가져오기
                 let TableDisplayList = [];
                 TableDisplayList.push('Product');
                 TableDisplayList.push('ListPrice');
@@ -30,7 +31,6 @@
                 component.set("v.isAvailableDelete", false);
                 component.set("v.isClickedAddProduct", false);
                 component.set("v.isAbleClickSave", false);
-
                 component.set("v.toggleSpinner", false);
     },
 
@@ -49,6 +49,7 @@
                         listSelectedData.push(data[idx]);
                     } else {
                         listSelectedData.splice(listSelectedData.indexOf(data[idx]), 1);
+
                     }
 
                     for(var row of data){
@@ -69,6 +70,7 @@
                         }
                     }
                 }
+
                 component.set("v.listSelectedData", listSelectedData);
                 component.set("v.isAvailableDelete", !isUnChecked);
                 component.set("v.listData", data);
@@ -134,7 +136,6 @@
 
                 helper.changeValue(component, event, helper, type, idx, targetValue);
 
-
                 console.log('[fnChangeValue] End =============================>');
             },
 
@@ -180,9 +181,7 @@
             },
 
             fnCancel : function(component, event, helper){
-                component.set("v.toggleSpinner", true);
                 $A.get('e.force:refreshView').fire();
-                component.set("v.toggleSpinner", false);
             },
 
             fnMoveRow : function(component, event, helper){

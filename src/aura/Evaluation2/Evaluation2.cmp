@@ -1,24 +1,51 @@
 <!--
  - Created by hyunsoo.song@daeunextier.com on 2022-12-12.
  -->
+<!--
+요구사항 - lightning component로 개발
+개발된 컴포넌트는 Opportunity Record Page에 노출
+화면
+┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
+│ Seq           │ Product       │ List Price    │ Unit Price    │ Quantity      │ TotalPrice    │ Description   │ Action [+ Button]│
+├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
+│[seq]          │[Search Product│[List Price]   │[Input]        │[Input]        │[Auto]         │[Input]        │[-,▲,▼ Button] │
+└───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┘
+[Cancel] [Save]
+로딩시 이미 저장되어 있는 OpportunityLineItem 레코드를 불러 화면에 뿌려줌
+필드 : SortOrder, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description
++ 버튼 클릭시 맨 아래에 빈라인이 생성이 되면서 Seq(SortOrder)는 가장큰 Seq(SortOrder)+1 로 생성이 됨
+Product를 검색하여 선택한 경우 Product에 등록되어 있는 ListPrice를 불어와 화면에 노출
+UnitPrice와 Quantity 입력 또는 수정시 TotalPrice는 자동 계산
+- 버튼 클릭시 해당 라인은 삭제
+▲ 버튼은 맨 상단은 노출안함
+▲ 버튼 클릭시 해당라인을 위 라인으로 이동하면서 Seq(SortOrder) 조정
+▼ 버튼은 맨 하단은 노출안함
+▼ 버튼 클릭시 해당라인을 아래 라인으로 이동하면서 Seq(SortOrder) 조정
+Cancel 버튼 클릭시 현재까지 수정된 사항은 취소되고 초기화
+Save 버튼 클릭시 현재까지 입력된 사항 저장
+기타 필요한 사항이 있다고 판단이 되면 추가
+
+Evaluation3 작업 이후 작업
+OpportunityLineItem에 아래 필드 추가
+Exchange Rate (ExchangeRate__c Number(10,8))
+USD TotalPrice (UsdTotalPrice__c Number(16,2))
+┌───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┬───────────────┐
+│ Seq           │ Product       │ List Price    │ Unit Price    │ Quantity      │ TotalPrice    │ Description   │ Exchange Rate │ USD TotalPrice│ Action [+ Button]│
+├───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┼───────────────┤
+│[seq]          │[Search Product│[List Price]   │[Input]        │[Input]        │[Auto]         │[Input]        │[Auto]         │[Auto]         │[-,▲,▼ Button] │
+└───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┴───────────────┘
+[Cancel] [Save] [환율 Reset]
+라인이 추가될때 Evaluation3에서 만든 API를 호출하여 (웹서비스로 호출) Exchange Rate 및 USD TotalPrice를 계산하여 넣는다.
+USD TotalPrice는 TotalPrice * (1 / Exchange Rate)
+이후 TotalPrice가 변경될때마다 USD TotalPrice를 자동으로 계산하여 보여준다.
+USD TotalPrice를 소수점3자리에서 반올림 처리하여 2자리까지만 보여준다.
+환율 Reset 버튼을 클릭하면 비동기식 방식으로 (Queueable 방식) Evaluation3에서 만든 API를 하나씩 호출하며 한 라인씩 업데이트한다.
+화면에서 한 라인씩 호출하여야 하며 화면에서는 완료될때까지 pending 처리를 한다.
+저장시 Exchange Rate 및 USD TotalPrice까지 저장한다. -->
 
 <aura:component description="Evaluation2" controller="Evaluation2Controller"
                 implements="flexipage:availableForRecordHome, force:hasRecordId, flexipage:availableForAllPageTypes, force:appHostable, forceCommunity:availableForAllPageTypes"
                 access="global">
-
-    <aura:attribute name="recordId" type="String"
-                    description="Get recordId in Controller"/>
-    <aura:attribute name="isClickAddButton" type="boolean" default="false"
-                    description="Check if button is clicked"/>
-
-    <!-- DataTable Attributes -->
-    <!--<aura:attribute name="listData" type="List"/>-->
-    <aura:attribute name="listColumn" type="List"/>
-    <aura:attribute name="errors" type="Object" default="[]"/>
-    <!-- <aura:attribute name="draftValues" type="Object" default="[]"/>-->
-
-    <aura:attribute name="rowsToAdd" type="Integer" default="10"/>
-    <aura:attribute name="dataTableSchema" type="Object"/>
 
     <!-- 화면 새로고침 -->
     <aura:handler event="force:refreshView" action="{!c.fnInit}"/>
@@ -32,52 +59,26 @@
     <aura:attribute name="setHeader" type="String" default="기회 상품"/>
     <aura:attribute name="setIconName" type="String" default="standard:product_required"/>
 
-    <!-- DataTable 용도 -->
-    <aura:attribute name="objOrder" type="Order"/>
-    <aura:attribute name="objRecordType" type="String"/>
-    <aura:attribute name="ProductShipping" type="String" default=""/>
-
     <!-- Table Column 값 지정 용도 -->
     <aura:attribute name="TableDisplayList" type="List" default=""/>
-
     <aura:attribute name="listData" type="List" default="[]"/>
     <aura:attribute name="listSelectedData" type="List" default="[]"/>
     <aura:attribute name="listDeleteTargetId" type="List" default="[]"/>
-    <aura:attribute name="listDataColumn" type="List"/>
-    <aura:attribute name="draftValueMap" type="Map" default="{}"/>
     <aura:attribute name="draftValues" type="Object" default="[]"/>
     <aura:attribute name="dataIdx" type="Integer"/>
     <aura:attribute name="listUpdate" type="List" default="[]"/>
     <aura:attribute name="mapUpdate" type="map" default="{}"/>
 
-    <!-- 수정/삭제 불가 Flag값-->
+    <!-- 화면에서 수정/삭제/취소/저장 Flag값-->
     <aura:attribute name="isAvailableDelete" type="Boolean" default="false"/>
-    <aura:attribute name="hasOpportunity" type="Boolean" default="false"/>
-    <aura:attribute name="isPartnerProfile" type="Boolean" default="false"/>
-    <aura:attribute name="hasShippingFee" type="Boolean" default="false"/>
-    <aura:attribute name="isKoreanOrder" type="Boolean" default="false"/>
-    <aura:attribute name="isAvailableAddShipping" type="Boolean" default="false"/>
-
-    <!-- Grid 화면에서 수정/삭제 불가 실질적 Setting 값-->
     <aura:attribute name="isAbleClickAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleClickSave" type="Boolean" default="false"/>
     <aura:attribute name="isDisableButton" type="Boolean" default="false"/>
-    <!--    <aura:attribute name="isAbleMoveUp" type="Boolean" default="false"/>
-        <aura:attribute name="isAbleMoveDown" type="Boolean" default="false"/>-->
     <aura:attribute name="isClickedAddProduct" type="Boolean" default="false"/>
     <aura:attribute name="isAbleMoveRow" type="Boolean" default="true"/>
 
-    <!-- Validation 용도 -->
-    <aura:attribute name="IsEmpty" type="Boolean" default="false"/>
-    <aura:attribute name="statusMsg" type="String" default="None"/>
-    <aura:attribute name="lastUpdate" type="String"/>
+    <!-- 로딩 용도 -->
     <aura:attribute name="toggleSpinner" type="Boolean" default="false"/>
-
-    <!-- Button Add Row
-    <div style="text-align:right; margin:5px">
-        <lightning:button label="Add Row" onclick="{! c.fnAddRow }"/>
-    </div>-->
-
 
     <div class="slds-card">
         <div class="slds-page-header">
@@ -97,7 +98,6 @@
                             <h1>
                             <span class="slds-page-header__title slds-align-middle" title="{!v.setHeader}"
                                   style="font-size : 16px;">
-<!--                                    {!v.setHeader + ' (' + v.listCurrentData.length + ')'}-->
                                 {!v.setHeader}
                                 {!' (' + v.listData.length + ')'}
                             </span>
@@ -139,15 +139,15 @@
                             <table aria-multiselectable="false" role="grid"
                                    class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
                                 <colgroup>
-                                    <col width="5%"/>
-                                    <col width="5%"/>
+                                    <col width="5%"/>       <!--Seq-->
+                                    <col width="5%"/>       <!--Checkbox-->
                                     <col width="10%"/>      <!--Product-->
                                     <col width="15%"/>       <!--ListPrice-->
                                     <col width="15%"/>      <!--UnitPrice-->
                                     <col width="10%"/>      <!--Quantity-->
                                     <col width="15%"/>       <!--TotalPrice-->
                                     <col width="15%"/>       <!--Description-->
-                                    <col width="10%"/>       <!--Description%-->
+                                    <col width="10%"/>       <!--MoveButton-->
                                 </colgroup>
                                 <thead>
                                 <tr class="slds-line-height_reset">
@@ -237,7 +237,7 @@
                                                                  onchange="{!c.fnChangeValue}"
                                                                  disabled="{!obj.selectProduct}"/>
                                             </td>
-                                            <td class="" title="MoveSeq">
+                                            <td class="" title="MoveSeq" style="text-align:center">
                                                 <aura:if isTrue="{!idx != 0}">
                                                     <lightning:button label="▲" class="moveUp" value="{!idx}"
                                                                       onclick="{!c.fnMoveRow}"

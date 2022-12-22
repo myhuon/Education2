@@ -13,11 +13,15 @@ public with sharing class Evaluation2Controller {
     // 기회의 모든 제품들 반환
     private static List<OpportunityLineItem> getOpportunityLineItems(String recordId) {
         List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Name, Product2.Name, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder
+                SELECT Name, Product2.Name, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId
                 FROM OpportunityLineItem
                 WHERE OpportunityId = :recordId
                 ORDER BY SortOrder
         ];
+
+        for(OpportunityLineItem obj : listOpportunityLineItems) {
+            System.debug('getInit order : ' + obj.SortOrder);
+        }
 
         return listOpportunityLineItems;
     }
@@ -25,7 +29,7 @@ public with sharing class Evaluation2Controller {
     // 하나의 기회 제품 반환
     private static OpportunityLineItem getOpportunityLineItem(String itemId) {
         List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder
+                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId
                 FROM OpportunityLineItem
                 WHERE Id = :itemId
                 LIMIT 1
@@ -44,12 +48,30 @@ public with sharing class Evaluation2Controller {
 
     @AuraEnabled
     public static boolean saveRecord(Map<Integer, OpportunityLineItem> draftValues) {
+        Set<Id> setOppId = new Set<Id>();
 
         for (OpportunityLineItem objItem : draftValues.values()) {
             System.debug('[saveRecord] objItem.SortOrder : ' + objItem.SortOrder);
             System.debug('[saveRecord] objItem : ' + objItem);
-            if (objItem.Quantity == null || objItem.UnitPrice == null || objItem.Product2Id == null) {
+            if (objItem.Quantity == null || objItem.UnitPrice == null) {
                 return false;
+            }
+
+            setOppId.add(objItem.OpportunityId);
+        }
+
+        if(!setOppId.isEmpty()) {
+            List<Opportunity> listTarget = new List<Opportunity>();
+            for(Opportunity objOpp : [
+                    SELECT Pricebook2Id
+                    FROM Opportunity
+                    WHERE Id =: setOppId AND Pricebook2Id =: null
+            ]) {
+                listTarget.add(objOpp);
+            }
+
+            if(!listTarget.isEmpty()) {
+                doOppPriceBookUpdate(listTarget);
             }
         }
 
@@ -137,6 +159,20 @@ public with sharing class Evaluation2Controller {
 
         System.debug('[doMoveRow] ====================> end! ');
         return mapUpdate;
+    }
+
+    private static void doOppPriceBookUpdate(List<Opportunity> listTarget) {
+        List<Opportunity> listUpdate = new List<Opportunity>();
+        Pricebook2 objStandardPB2 = [SELECT Id, Name, IsActive FROM PriceBook2 WHERE IsStandard = TRUE LIMIT 1];
+
+        for(Opportunity objOpp : listTarget) {
+            objOpp.Pricebook2Id = objStandardPB2.Id;
+            listUpdate.add(objOpp);
+        }
+
+        if(!listUpdate.isEmpty()) {
+            update listUpdate;
+        }
     }
 
     private static OpportunityLineItem returnChangeItem(OpportunityLineItem objChangeItem, String targetValue, String type) {

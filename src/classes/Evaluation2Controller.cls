@@ -207,10 +207,12 @@ public with sharing class Evaluation2Controller {
         mapT.put('currencyisocode', 'usd');*/
 
 
-        RestRequest request = RestContext.request;
+        RestRequest request = new RestRequest();
         request.httpMethod = 'POST';
         request.params.put('currencyisocode', 'usd');
-        request.requestURI = '/util/exchangerate';
+        request.requestURI = 'https://daeunextier66-dev-ed.develop.lightning.force.com/services/apexrest/util/exchangerate';
+        RestContext.request = request;
+
         System.debug('request : ' + request);
 
 

@@ -21,6 +21,8 @@
                 TableDisplayList.push('UnitPrice');
                 TableDisplayList.push('Quantity');
                 TableDisplayList.push('TotalPrice');
+                TableDisplayList.push('Exchange Rate');
+                TableDisplayList.push('USD TotalPrice');
                 TableDisplayList.push('Description');
                 TableDisplayList.push('');
                 component.set("v.TableDisplayList", TableDisplayList);
@@ -97,7 +99,9 @@
                         'Quantity'               : 0.0,
                         'checked'                : false,
                         'TotalPrice'             : 0.0,
-                        'selectProduct'          : true
+                        'selectProduct'          : true,
+                        'ExchangeRate__c'        : 0.0,
+                        'UsdTotalPrice__c'       : 0.0
                 };
                 data.push(obj);
                 component.set("v.listData", data);
@@ -111,15 +115,19 @@
                 let listSelectedData = component.get("v.listSelectedData");
                 var data = component.get("v.listData");
                 var listDeleteTargetId = component.get("v.listDeleteTargetId");
+                var listSortOrder = [];
 
                 for(var row of listSelectedData){
                     if(row.Id) {
                         listDeleteTargetId.push(row.Id);
                     }
+                    if(row.SortOrder) {
+                        listSortOrder.push(row.SortOrder);
+                    }
                     data.splice(data.indexOf(row), 1);
                 }
 
-                if(listDeleteTargetId.length > 0) helper.deleteRow(component, event, helper, listDeleteTargetId);
+                if(listDeleteTargetId.length > 0) helper.deleteRow(component, event, helper, listDeleteTargetId, listSortOrder);
 
                 component.set("v.listData", data);
                 component.set("v.listSelectedData", []);
@@ -192,5 +200,9 @@
                 if(moveDirection != 'moveUp') isUp = false;
 
                 helper.moveRow(component, event, helper, idx, isUp);
+            },
+
+            fnResetExchangeRate : function(component, event, helper){
+
             },
 });

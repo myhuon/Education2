@@ -103,6 +103,9 @@ USD TotalPrice를 소수점3자리에서 반올림 처리하여 2자리까지만
                             </span>
                             </h1>
                         </div>
+                        <div>
+                            <lightning:button label="{!$Label.c.ResetExchangeRate}" onclick="{!c.fnResetExchangeRate}" variant="neutral"/>
+                        </div>
                     </div>
                 </div>
 
@@ -139,21 +142,22 @@ USD TotalPrice를 소수점3자리에서 반올림 처리하여 2자리까지만
                             <table aria-multiselectable="false" role="grid"
                                    class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
                                 <colgroup>
-                                    <col width="5%"/>       <!--Seq-->
-                                    <col width="5%"/>       <!--Checkbox-->
+                                    <col width="2%"/>       <!--Seq-->
+                                    <col width="3%"/>       <!--Checkbox-->
                                     <col width="10%"/>      <!--Product-->
-                                    <col width="15%"/>       <!--ListPrice-->
-                                    <col width="15%"/>      <!--UnitPrice-->
-                                    <col width="10%"/>      <!--Quantity-->
-                                    <col width="15%"/>       <!--TotalPrice-->
-                                    <col width="15%"/>       <!--Description-->
+                                    <col width="10%"/>       <!--ListPrice-->
+                                    <col width="10%"/>      <!--UnitPrice-->
+                                    <col width="5%"/>      <!--Quantity-->
+                                    <col width="10%"/>       <!--TotalPrice-->
+                                    <col width="10%"/>      <!--Exchange Rate-->
+                                    <col width="10%"/>      <!--USD TotalPrice-->
+                                    <col width="10%"/>       <!--Description-->
                                     <col width="10%"/>       <!--MoveButton-->
                                 </colgroup>
                                 <thead>
                                 <tr class="slds-line-height_reset">
                                     <th></th>
-                                    <th class="slds-text-align_right slds-cell_action-mode" scope="col"
-                                        style="width:3.25rem">
+                                    <th class="slds-text-align_right slds-cell_action-mode" scope="col">
                                         <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
                                         <div class="slds-th__action slds-th__action_form slds-text-align_right">
                                             <lightning:input aura:Id="selectAll" type="checkbox"
@@ -165,15 +169,8 @@ USD TotalPrice를 소수점3자리에서 반올림 처리하여 2자리까지만
                                         <th aria-label="Name" aria-sort="none"
                                             class="slds-is-resizable slds-is-sortable slds-cell_action-mode"
                                             scope="col">
-                                            <span class="slds-assistive-text">Sort by: </span>
                                             <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
                                                 <span class="slds-truncate" title="{!FieldValues}">{!FieldValues}</span>
-                                            </div>
-                                            <div class="slds-resizable">
-                                                <input type="range" aria-label="Name column width"
-                                                       class="slds-resizable__input slds-assistive-text"
-                                                       id="cell-resize-handle-638" max="1000" min="20" tabindex="0"/>
-                                                <span class="slds-resizable__handle"></span>
                                             </div>
                                         </th>
                                     </aura:iteration>
@@ -228,6 +225,18 @@ USD TotalPrice를 소수점3자리에서 반올림 처리하여 2자리까지만
                                             <td class="" title="TotalAmount">
                                                 <lightning:input formatter="currency" type="number"
                                                                  value="{!obj.TotalPrice}" variant="label-hidden"
+                                                                 disabled="true"/>
+                                            </td>
+                                            <td class="" title="Exchange Rate">
+                                                <lightning:input type="number" value="{!obj.ExchangeRate__c}"
+                                                                 variant="label-hidden"
+                                                                 class="{!'ItemList-ExchangeRate-' + idx}"
+                                                                 disabled="true"/>
+                                            </td>
+                                            <td class="" title="USD TotalPrice">
+                                                <lightning:input formatter="currency" type="number" value="{!obj.UsdTotalPrice__c}"
+                                                                 variant="label-hidden"
+                                                                 class="{!'ItemList-UsdTotalPrice-' + idx}"
                                                                  disabled="true"/>
                                             </td>
                                             <td class="" title="Description">

@@ -100,12 +100,13 @@
                 console.log('[doSave] End ==============================>');
             },
 
-            deleteRow: function (component, event, helper, listDeleteTargetId) {
+            deleteRow: function (component, event, helper, listDeleteTargetId, listSortOrder) {
                 console.log('[deleteRow] Start ==============================>');
                 component.set("v.toggleSpinner", true);
                 var action = component.get("c.deleteRecord");
                 action.setParams({
-                    listDeleteTargetId: listDeleteTargetId
+                    listDeleteTargetId: listDeleteTargetId,
+                    listSortOrder : listSortOrder
                 });
                 action.setCallback(this, function (response) {
                     var state = response.getState();
@@ -156,6 +157,14 @@
                         if(result != null){
                             component.set("v.mapUpdate", result);
                             component.set("v.isAbleClickSave", true);
+
+                            if(type == 'OpportunityLineItem') {
+                                var xhr = new XMLHttpRequest();
+                                    var d = JSON.stringify('{"currencyisocode" : "usd"}');
+                                    xhr.open('POST','/services/apexrest//util/exchangerate');
+                                    /*xhr.setRequestHeader('Authorization','Bearer '+document.cookie.match(/sid=(.+?);/)[1]);*/
+                                    xhr.send(d);
+                            }
                         }
                     } else if (state === "ERROR") {
                         var errors = response.getError();

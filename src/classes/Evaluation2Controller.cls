@@ -13,7 +13,7 @@ public with sharing class Evaluation2Controller {
     // 기회의 모든 제품들 반환
     private static List<OpportunityLineItem> getOpportunityLineItems(String recordId) {
         List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Name, Product2.Name, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId
+                SELECT Name, Product2.Name, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId, ExchangeRate__c, UsdTotalPrice__c
                 FROM OpportunityLineItem
                 WHERE OpportunityId = :recordId
                 ORDER BY SortOrder
@@ -29,7 +29,7 @@ public with sharing class Evaluation2Controller {
     // 하나의 기회 제품 반환
     private static OpportunityLineItem getOpportunityLineItem(String itemId) {
         List<OpportunityLineItem> listOpportunityLineItems = [
-                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId
+                SELECT Name, Product2Id, ListPrice, UnitPrice, Quantity, TotalPrice, Description, Id, SortOrder, PricebookEntryId, ExchangeRate__c, UsdTotalPrice__c
                 FROM OpportunityLineItem
                 WHERE Id = :itemId
                 LIMIT 1
@@ -98,7 +98,16 @@ public with sharing class Evaluation2Controller {
     }
 
     @AuraEnabled
-    public static boolean deleteRecord(List<Id> listDeleteTargetId) {
+    public static boolean deleteRecord(List<Id> listDeleteTargetId, List<Id> listDeleteTargetOppId) {
+        /*for(OpportunityLineItem obj : [
+                SELECT Id, SortOrder
+                FROM OpportunityLineItem
+                WHERE OpportunityId IN: listDeleteTargetOppId
+                ORDER BY SortOrder
+        ]) {
+
+        }*/
+
         try {
             List<Database.DeleteResult> results = Database.delete(listDeleteTargetId, true);
             return true;
@@ -119,10 +128,10 @@ public with sharing class Evaluation2Controller {
             } else {
                 objChangeItem = mapUpdate.get(idx);
             }
-
             mapUpdate.put(idx, returnChangeItem(objChangeItem, targetValue, type));
         } else {
-            mapUpdate.put(idx, new OpportunityLineItem(OpportunityId = recordId, Product2Id = productId));
+            Integer exchangeRate = returnExchangeRate();
+            mapUpdate.put(idx, new OpportunityLineItem(OpportunityId = recordId, Product2Id = productId, ExchangeRate__c = exchangeRate));
         }
 
         System.debug('mapUpdate : ' + mapUpdate);
@@ -179,10 +188,10 @@ public with sharing class Evaluation2Controller {
 
         switch on type {
             when 'Amount' {
-                objChangeItem.Quantity = targetValue != '' ? Integer.valueOf(targetValue) : null;
+                objChangeItem.Quantity = targetValue != '' ? Integer.valueOf(targetValue) : 0;
             }
             when 'Price' {
-                objChangeItem.UnitPrice = targetValue != '' ? Double.valueOf(targetValue) : null;
+                objChangeItem.UnitPrice = targetValue != '' ? Double.valueOf(targetValue) : 0.0;
             }
             when 'Description' {
                 objChangeItem.Description = targetValue;
@@ -190,5 +199,46 @@ public with sharing class Evaluation2Controller {
         }
 
         return objChangeItem;
+    }
+
+    private static Integer returnExchangeRate() {
+        Integer exchangeRate = 0;
+/*        Map<String, String> mapT = new Map<String, String>();
+        mapT.put('currencyisocode', 'usd');*/
+
+
+        RestRequest request = RestContext.request;
+        request.httpMethod = 'POST';
+        request.params.put('currencyisocode', 'usd');
+        request.requestURI = '/util/exchangerate';
+        System.debug('request : ' + request);
+
+
+        RestResponse response = RestContext.response;
+        System.debug('reponse : ' + response);
+
+
+        // HttpRequest setting
+        /*Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://daeunextier66-dev-ed.develop.lightning.force.com/services/apexrest/util/exchangerate');
+        request.setBody('{"currencyisocode":"usd"}');
+        request.setMethod('POST');
+        request.setTimeout(120000);
+
+        System.debug('[returnExchangeValue] request : ' + request);
+
+        // received HttpResponse
+        HttpResponse response = http.send(request);
+        System.debug('[reuturnExchangeValue] res : ' + response);
+        //if(response.getStatusCode() == 200) {
+            Map<String, Object> mapResult = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            exchangeRate = (Integer) mapResult.get('exchangeRate');
+
+            System.debug('[returnExchangeValue] mapResult : ' + mapResult);
+            System.debug('[returnExchangeValue] exchangeRate : ' + exchangeRate);*/
+        //}
+
+        return exchangeRate;
     }
 }
